@@ -5,7 +5,7 @@
 package Engine;
 
 /**
- *
+ * X DIOSSSSSSSS Q SALGA!!!!!
  * @author Administrador
  */
 public class Cama {
