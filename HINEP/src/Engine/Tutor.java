@@ -1,12 +1,12 @@
 package Engine;
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Clase donde se representa a un tutor
+ * 
  */
 
 /**
- *  Tuto cambia?
+ * 
  * @author Administrador
  */
 public class Tutor extends Persona{
