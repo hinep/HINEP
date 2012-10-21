@@ -10,6 +10,8 @@
  */
 package Interfaces;
 
+import java.sql.Connection;
+
 /**
  *
  * @author pc
@@ -18,8 +20,10 @@ public class Medicar extends javax.swing.JFrame {
 
     javax.swing.JFrame Menu;
     
-    public Medicar(javax.swing.JFrame menu) {
+    public Medicar(javax.swing.JFrame menu, Connection cn) {
+        
         initComponents();
+        this.conexion = cn;
         Menu=menu;
     }
 
@@ -56,7 +60,7 @@ public class Medicar extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 12));
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel1.setText("Código de Receta:");
 
         jButton1.setText("Buscar");
@@ -65,27 +69,27 @@ public class Medicar extends javax.swing.JFrame {
 
         jtfNumSoc.setEditable(false);
 
-        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel5.setText("Numero de Socio:");
 
         jtfObraSocial.setEditable(false);
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel4.setText("Obra Social:");
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel2.setText("Edad:");
 
         jtfEdad.setEditable(false);
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel3.setText("Sexo:");
 
         jtfSexo.setEditable(false);
 
         jtfNombre.setEditable(false);
 
-        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel6.setText("Nombre y Apellido:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -110,7 +114,7 @@ public class Medicar extends javax.swing.JFrame {
                         .addComponent(jtfSexo, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                         .addGap(168, 168, 168))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtfObraSocial, javax.swing.GroupLayout.DEFAULT_SIZE, 167, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
@@ -124,7 +128,7 @@ public class Medicar extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jtfNombre))
                 .addGap(4, 4, 4)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,7 +136,7 @@ public class Medicar extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                         .addComponent(jtfEdad))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jtfSexo)))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -202,7 +206,7 @@ public class Medicar extends javax.swing.JFrame {
                         .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(83, 83, 83)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jtfCodigo, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -227,7 +231,7 @@ public class Medicar extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(7, 7, 7)
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -259,7 +263,7 @@ public class Medicar extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
+    private Connection conexion;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

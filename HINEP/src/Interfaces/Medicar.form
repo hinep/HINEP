@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
@@ -52,7 +52,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
-                          <Component id="jLabel1" pref="102" max="32767" attributes="0"/>
+                          <Component id="jLabel1" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                           <Component id="jtfCodigo" pref="183" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
@@ -85,7 +85,7 @@
                           <EmptySpace min="7" pref="7" max="7" attributes="0"/>
                           <Component id="jLabel1" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jButton1" alignment="3" max="32767" attributes="0"/>
+                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel2" max="32767" attributes="0"/>
@@ -151,7 +151,7 @@
                               <EmptySpace min="-2" pref="168" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jLabel4" pref="59" max="32767" attributes="0"/>
+                              <Component id="jLabel4" max="32767" attributes="0"/>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Component id="jtfObraSocial" pref="167" max="32767" attributes="0"/>
                               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
@@ -169,7 +169,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel6" alignment="3" pref="16" max="32767" attributes="0"/>
+                          <Component id="jLabel6" alignment="3" max="32767" attributes="0"/>
                           <Component id="jtfNombre" alignment="3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
@@ -179,7 +179,7 @@
                               <Component id="jtfEdad" alignment="3" max="32767" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="jLabel3" alignment="3" pref="16" max="32767" attributes="0"/>
+                              <Component id="jLabel3" alignment="3" max="32767" attributes="0"/>
                               <Component id="jtfSexo" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>

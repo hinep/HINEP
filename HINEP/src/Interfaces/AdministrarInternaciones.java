@@ -1,14 +1,16 @@
 package Interfaces;
 
+import java.sql.Connection;
+
 public class AdministrarInternaciones extends javax.swing.JDialog {
 
     javax.swing.JFrame Menu;
     
-    public AdministrarInternaciones(javax.swing.JFrame parent, boolean modal) {
+    public AdministrarInternaciones(javax.swing.JFrame parent, boolean modal, Connection cn) {
         super(parent, modal);
         initComponents();
-        
-        Menu=parent;
+        this.conexion = cn;
+        this.Menu=parent;
         
         buttonGroup1.add(jrbAlta);
         buttonGroup1.add(jrbTiempo);
@@ -102,7 +104,7 @@ public class AdministrarInternaciones extends javax.swing.JDialog {
     }//GEN-LAST:event_jbAceptarActionPerformed
 
     
-    
+    private Connection conexion;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel jPanel1;

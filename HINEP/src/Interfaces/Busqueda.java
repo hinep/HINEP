@@ -11,6 +11,7 @@
 package Interfaces;
 
 import java.awt.Color;
+import java.sql.Connection;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,9 +22,11 @@ public class Busqueda extends javax.swing.JFrame {
 
     javax.swing.JFrame Menu;
     /** Creates new form Busqueda */
-    public Busqueda(javax.swing.JFrame menu) {
+    public Busqueda(javax.swing.JFrame menu, Connection cn) {
+        
         initComponents();
-        this.Menu=menu;
+        this.conexion = cn;
+        this.Menu = menu;
         
         grupodebotones.add(jrbDni);
         grupodebotones.add(jrbNombre);
@@ -294,6 +297,7 @@ public class Busqueda extends javax.swing.JFrame {
             }
         });
     }*/
+    private Connection conexion;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grupodebotones;
     private javax.swing.JLabel jLabel1;
