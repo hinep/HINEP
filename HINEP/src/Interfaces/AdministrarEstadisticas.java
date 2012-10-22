@@ -4,7 +4,7 @@ public class AdministrarEstadisticas extends javax.swing.JDialog {
 
     javax.swing.JFrame Menu;
     
-    public AdministrarEstadisticas(javax.swing.JFrame parent, boolean modal) {
+    public AdministrarEstadisticas(javax.swing.JFrame parent, boolean modal, java.sql.Connection con) {
         super(parent, modal);
         initComponents();
         

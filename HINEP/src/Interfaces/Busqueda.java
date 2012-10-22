@@ -30,9 +30,11 @@ public class Busqueda extends javax.swing.JFrame {
 
     javax.swing.JFrame Menu;
     /** Creates new form Busqueda */
-    public Busqueda(javax.swing.JFrame menu) {
+    public Busqueda(javax.swing.JFrame menu, Connection cn) {
+        
         initComponents();
-        this.Menu=menu;
+        this.conexion = cn;
+        this.Menu = menu;
         
         grupodebotones.add(jrbDni);
         grupodebotones.add(jrbNombre);
@@ -289,12 +291,11 @@ public class Busqueda extends javax.swing.JFrame {
         int i = JOptionPane.showConfirmDialog(rootPane, "¿Está seguro que desea cancelar el ingreso de un nuevo paciente?", "Confirmación", WIDTH);
         if(i==0){
             this.setVisible(false);
-            MenuPrincipal menu;
+            Menu menu;
             try {
-                menu = new MenuPrincipal();
+                GestionBaseDatos bd = new GestionBaseDatos();
+                menu = new Menu(bd.getCx());
                 menu.setVisible(true);
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -398,6 +399,7 @@ public class Busqueda extends javax.swing.JFrame {
             }
         });
     }*/
+    private Connection conexion;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grupodebotones;
     private javax.swing.JLabel jLabel1;
