@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
@@ -81,12 +81,12 @@
                                   <Component id="jrbDni" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="69" max="-2" attributes="1"/>
                               </Group>
-                              <Component id="jtfDni" alignment="0" pref="112" max="32767" attributes="0"/>
+                              <Component id="jtfDni" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="81" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jbNuevo" pref="112" max="32767" attributes="0"/>
-                              <Component id="jtfNombre" alignment="0" pref="112" max="32767" attributes="0"/>
+                              <Component id="jbNuevo" max="32767" attributes="0"/>
+                              <Component id="jtfNombre" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jrbNombre" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="1" max="-2" attributes="1"/>
@@ -107,7 +107,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                  <Component id="jLabel1" pref="19" max="32767" attributes="0"/>
+                  <Component id="jLabel1" max="32767" attributes="0"/>
                   <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jrbDni" alignment="3" max="32767" attributes="0"/>
@@ -117,7 +117,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jtfDni" alignment="3" max="32767" attributes="0"/>
                       <Component id="jtfNombre" alignment="3" max="32767" attributes="0"/>
-                      <Component id="jtfApellido" alignment="3" pref="20" max="32767" attributes="0"/>
+                      <Component id="jtfApellido" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -147,30 +147,53 @@
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrbDni">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="grupodebotones"/>
+            </Property>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="DNI"/>
           </Properties>
           <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jrbDniStateChanged"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbDniActionPerformed"/>
+            <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="jrbDniPropertyChange"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jrbNombre">
           <Properties>
+            <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
+              <ComponentRef name="grupodebotones"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Nombre y Apellido"/>
           </Properties>
           <Events>
+            <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jrbNombreStateChanged"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jrbNombreActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfDni">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfDniKeyPressed"/>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfDniKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfNombre">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfNombreKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jtfApellido">
+          <Events>
+            <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfApellidoKeyReleased"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jbBuscar">
           <Properties>
             <Property name="text" type="java.lang.String" value="Buscar"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jbBuscarMouseClicked"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel2">
           <Properties>

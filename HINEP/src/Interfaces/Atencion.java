@@ -1,13 +1,93 @@
 package Interfaces;
 
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 public class Atencion extends javax.swing.JFrame {
 
     javax.swing.JFrame Menu, Selec;
+    int id_esperas,id_paciente,pos,controlespera;
+    Connection con;
+    PreparedStatement ps,pa,pe,pi,po,pu,ps2;
+    ResultSet res,res1,res2,res3,res4;
     
-    public Atencion(javax.swing.JFrame menu, javax.swing.JFrame selec) {
+    public Atencion(javax.swing.JFrame menu, javax.swing.JFrame selec,Connection cn, int id_esp) throws SQLException {
         initComponents();
         Menu = menu;
         Selec=selec;
+        id_esperas=id_esp;
+        con=cn;
+        ps = con.prepareStatement("select * from esperas where id_esperas=?");
+        ps.setInt(1, id_esperas);        
+        res = ps.executeQuery();
+        res.next();
+        pa = con.prepareStatement("select * from pacientes where id_paciente=?");
+        id_paciente = res.getInt("id_paciente");
+        pa.setInt(1, id_paciente);
+        res1 = pa.executeQuery();
+        res1.next();
+        
+        pe = con.prepareStatement("select * from obras_sociales where id_os=?");
+        pe.setInt(1, res1.getInt("id_os"));
+        res2 = pe.executeQuery();
+        res2.next();
+        
+        jtfNombre.setText(res1.getString("nom_1")+" "+res1.getString("nom_2")+" "+res1.getString("ape_1")+" "+res1.getString("ape_2"));
+        jtfEdad.setText(res1.getString("fecha_nac"));
+        jtfSexo.setText(res1.getString("sexo"));
+        jtfObraSocial.setText(res2.getString("nombre_os"));
+        jtfNumSoc.setText(res1.getString("numero_os"));
+        
+        jtfNombre.setDisabledTextColor(Color.BLACK);
+        jtfEdad.setDisabledTextColor(Color.BLACK);
+        jtfSexo.setDisabledTextColor(Color.BLACK);
+        jtfObraSocial.setDisabledTextColor(Color.BLACK);
+        jtfNumSoc.setDisabledTextColor(Color.BLACK);
+        jtfNombre.disable();
+        jtfEdad.disable();
+        jtfSexo.disable();
+        jtfObraSocial.disable();
+        jtfNumSoc.disable();
+        
+        pi = con.prepareStatement("select * from historias_clinicas where id_paciente=?");
+        pi.setInt(1, id_paciente);
+        res3 = pi.executeQuery();
+        pos=0;       
+        controlespera=0;
+        
+        while(res3.next())
+        {
+                Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
+                for(int i=0;i<tabla.getColumnCount();i++)
+                for(int j=0;j<tabla.getRowCount();j++)
+                   m[j][i]=tabla.getValueAt(j, i);
+                tabla.setModel(new DefaultTableModel(m,new String[]{"Fecha", "Diagnostico","Patología"}));
+
+                m[pos][0] = res3.getString("fecha");
+                m[pos][1] = res3.getString("diagnostico");
+                m[pos][2] = res3.getString("patologia");
+                
+                tabla.setModel(new DefaultTableModel(m,new String[]{"Fecha", "Diagnostico","Patología"}));
+                pos++;
+                controlespera=1;
+        }
+        
+        if(controlespera==0){
+            JOptionPane.showMessageDialog(rootPane, "Este paciente no tiene diagnosticos previos");
+        }
+        
+        
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -28,16 +108,16 @@ public class Atencion extends javax.swing.JFrame {
         jtfNumSoc = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtfDiag = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jtfPat = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jtfPeso = new javax.swing.JFormattedTextField();
+        jtfTalla = new javax.swing.JFormattedTextField();
         jbRecetar = new javax.swing.JButton();
         jbPractica = new javax.swing.JButton();
         jbInternar = new javax.swing.JButton();
@@ -49,30 +129,20 @@ public class Atencion extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Datos de paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 12), java.awt.Color.black)); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 11));
         jLabel1.setText("Nombre y Apellido:");
 
-        jtfNombre.setEditable(false);
-
-        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 11));
         jLabel2.setText("Edad:");
 
-        jtfEdad.setEditable(false);
-
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 11));
         jLabel3.setText("Sexo:");
 
-        jtfSexo.setEditable(false);
-
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 11));
         jLabel4.setText("Obra Social:");
 
-        jtfObraSocial.setEditable(false);
-
-        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 11));
         jLabel5.setText("Numero de Socio:");
-
-        jtfNumSoc.setEditable(false);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -86,16 +156,16 @@ public class Atencion extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtfEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
                         .addGap(32, 32, 32)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jtfSexo, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                         .addGap(168, 168, 168))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 91, Short.MAX_VALUE)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtfNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jtfNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 447, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -103,7 +173,7 @@ public class Atencion extends javax.swing.JFrame {
                                 .addGap(32, 32, 32)
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jtfNumSoc, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jtfNumSoc, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)))
                         .addGap(16, 16, 16))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -113,18 +183,14 @@ public class Atencion extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
                     .addComponent(jtfNombre))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                            .addComponent(jtfEdad)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
-                            .addComponent(jtfSexo))))
+                .addGap(4, 4, 4)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
+                        .addComponent(jtfEdad))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                        .addComponent(jtfSexo)))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
@@ -136,7 +202,7 @@ public class Atencion extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Historia Clinica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 12), java.awt.Color.black)); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -152,7 +218,7 @@ public class Atencion extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -177,17 +243,33 @@ public class Atencion extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Nuevo Diagnóstico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 12))); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 12));
         jLabel6.setText("Diagnóstico:");
 
-        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 12));
         jLabel7.setText("Patología");
 
-        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 12));
         jLabel8.setText("Peso:");
 
-        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 12));
         jLabel9.setText("Talla:");
+
+        try {
+            jtfPeso.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##,##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jtfPeso.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtfPeso.setToolTipText("Ingresar el valor en Kilogramos");
+
+        try {
+            jtfTalla.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jtfTalla.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jtfTalla.setToolTipText("Ingresar el valor en centimentros");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -197,49 +279,48 @@ public class Atencion extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
+                        .addComponent(jtfDiag, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))
+                        .addComponent(jtfPat, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(183, 183, 183)))
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfPeso, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
+                        .addGap(176, 176, 176)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfTalla, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTextField1))
+                    .addComponent(jtfDiag))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTextField2))
+                    .addComponent(jtfPat))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jtfPeso, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTextField3)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jTextField4))
+                    .addComponent(jtfTalla, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
 
@@ -335,8 +416,71 @@ public class Atencion extends javax.swing.JFrame {
     }//GEN-LAST:event_jbRecetarActionPerformed
 
     private void jbTerminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbTerminarActionPerformed
-        this.setVisible(false);
-        Menu.setVisible(true);
+        if(!(jtfDiag.getText().isEmpty())&&!(jtfPat.getText().isEmpty())&&!(jtfPeso.getText().isEmpty())&&!(jtfTalla.getText().isEmpty())){
+            try {
+                
+                pu = con.prepareStatement("select * from historias_clinicas");
+                res4 = pu.executeQuery();
+                int id_hc=0;
+                controlespera=0;
+                while(res4.next()){
+                    id_hc = res4.getInt("id_historia")+1;     
+                    controlespera=1;
+                }
+                
+                if(controlespera!=1){
+                    id_hc=0;
+                }
+                
+                int id_per = 1;
+   
+                
+                //configurar fecha
+                SimpleDateFormat[] sdfs = {new SimpleDateFormat("yyyy-MM-dd")};
+                Date d = new Date();
+                d.getTime();
+                //configurar hora
+                SimpleDateFormat[] fhd = {new SimpleDateFormat("hh:mm")};
+                Date hora = new Date();
+                hora.getTime();
+                for(SimpleDateFormat fhd2 : fhd)
+                System.out.println(fhd2.format(hora));
+                
+                
+                
+               int conf = JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que desea terminar este diagnostico?", "Confirmación", 2);
+               if(conf==0){
+                   
+                    for(SimpleDateFormat sdf : sdfs)
+                    for(SimpleDateFormat fhd2 : fhd)
+                    po = con.prepareStatement("insert into historias_clinicas(id_historia, id_personal, id_paciente, fecha, hora, peso, talla, diagnostico, patologia) values (?, ?, ?, '"+sdf.format(d)+"', '"+fhd2.format(hora)+"', ?, ?, ?, ?);");
+                    
+                    po.setInt(1, id_hc);
+                    po.setInt(2, id_per);
+                    po.setInt(3, id_paciente);
+                    po.setString(4, jtfPeso.getText());
+                    po.setString(5, jtfTalla.getText());
+                    po.setString(6, jtfDiag.getText());
+                    po.setString(7, jtfPat.getText());
+
+
+                    po.execute();
+                    
+                    ps2 = con.prepareStatement("update esperas set estado='Atendido' where id_esperas=?;");
+                    ps2.setInt(1,id_esperas);
+                    ps2.execute();
+                    
+                    JOptionPane.showMessageDialog(rootPane, "Los datos se guardaron exitosamente");
+                    this.setVisible(false);
+                    Menu.setVisible(true);
+               }
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(Atencion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Debe completar el diagnistico actual, completando todos los campos vacios en 'Nuevo Diagnostico'");
+        }
     }//GEN-LAST:event_jbTerminarActionPerformed
 
     private void jbPracticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPracticaActionPerformed
@@ -366,19 +510,19 @@ public class Atencion extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JButton jbInternar;
     private javax.swing.JButton jbPractica;
     private javax.swing.JButton jbRecetar;
     private javax.swing.JButton jbTerminar;
+    private javax.swing.JTextField jtfDiag;
     private javax.swing.JTextField jtfEdad;
     private javax.swing.JTextField jtfNombre;
     private javax.swing.JTextField jtfNumSoc;
     private javax.swing.JTextField jtfObraSocial;
+    private javax.swing.JTextField jtfPat;
+    private javax.swing.JFormattedTextField jtfPeso;
     private javax.swing.JTextField jtfSexo;
+    private javax.swing.JFormattedTextField jtfTalla;
+    private javax.swing.JTable tabla;
     // End of variables declaration//GEN-END:variables
 }

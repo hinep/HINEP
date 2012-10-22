@@ -12,7 +12,10 @@ package Engine;
 public class Enfermera extends Persona{
     private int licencia;
     private String puesto;
-
+    
+    public Enfermera(String nom1, String nom2, String ape1, String ape2, String dni, String fecNac,String sexo){
+        super(nom1, nom2, ape1, ape2, dni, fecNac, sexo);
+    }
     public int getLicencia() {
         return licencia;
     }
@@ -30,17 +33,17 @@ public class Enfermera extends Persona{
     }
 
     @Override
-    void Agregar() {
+    void agregar() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    Persona Buscar() {
+    Persona buscar() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    void Modificar() {
+    void modificar() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
     

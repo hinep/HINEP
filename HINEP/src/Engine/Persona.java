@@ -15,10 +15,29 @@ public abstract class Persona {
     private String nombre2;
     private String apellido1;
     private String apellido2;
-    private int nroDni;
+    private String nroDni;
     private String domicilio;
     private String fechaNac;
+    private String sexo;
 
+    public Persona(String nom1, String nom2, String ape1, String ape2, String dni, String fecNac,String sexo){
+        this.apellido1 = ape1;
+        this.apellido2 = ape2;
+        this.fechaNac = fecNac;
+        this.nombre1 = nom1;
+        this.nombre2 = nom2;
+        this.nroDni = dni;
+        this.sexo = sexo;
+    }
+    
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+    
     public String getApellido1() {
         return apellido1;
     }
@@ -75,18 +94,18 @@ public abstract class Persona {
         this.nombre2 = nombre2;
     }
 
-    public int getNroDni() {
+    public String getNroDni() {
         return nroDni;
     }
 
-    public void setNroDni(int nroDni) {
+    public void setNroDni(String nroDni) {
         this.nroDni = nroDni;
     }
     
-    abstract void Agregar();
+    abstract void agregar();
       
-    abstract Persona Buscar();
+    abstract Persona buscar();
     
-    abstract void Modificar();
+    abstract void modificar();
     
 }

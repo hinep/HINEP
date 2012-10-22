@@ -52,6 +52,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("SansSerif", 3, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -174,8 +179,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jbIngresoActionPerformed
 
     private void jbAtenciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtenciónActionPerformed
-        SelecciondePaciente at = new SelecciondePaciente(this);
-        at.setVisible(true);
+        SelecciondePaciente at;
+        try {
+            at = new SelecciondePaciente(this,con);
+            at.setVisible(true);
+        } catch (SQLException ex) {
+            Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         this.setVisible(false);
     }//GEN-LAST:event_jbAtenciónActionPerformed
 
@@ -201,6 +212,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ae.setVisible(true);
     }//GEN-LAST:event_jbInternacionesActionPerformed
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowClosed
+
     
     private void IniciarConBD() throws ClassNotFoundException, SQLException{
         Class.forName("org.postgresql.Driver");
@@ -210,8 +225,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     
     
     private void Login(){
-        
-        
+
         IniciarSesion in = new IniciarSesion(this, rootPaneCheckingEnabled, con);
         this.setVisible(true);
         in.setVisible(true);
@@ -254,9 +268,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                     Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (SQLException ex) {
                     Logger.getLogger(MenuPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-                }
-;
-               
+                }               
             }
         });
     }

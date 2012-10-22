@@ -10,8 +10,17 @@
  */
 package Interfaces;
 
+import Engine.GestionBaseDatos;
 import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -63,24 +72,68 @@ public class Busqueda extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 14));
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         jLabel1.setText("Buscar paciente por:");
 
+        grupodebotones.add(jrbDni);
+        jrbDni.setSelected(true);
         jrbDni.setText("DNI");
+        jrbDni.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jrbDniStateChanged(evt);
+            }
+        });
         jrbDni.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbDniActionPerformed(evt);
             }
         });
+        jrbDni.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jrbDniPropertyChange(evt);
+            }
+        });
 
+        grupodebotones.add(jrbNombre);
         jrbNombre.setText("Nombre y Apellido");
+        jrbNombre.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jrbNombreStateChanged(evt);
+            }
+        });
         jrbNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jrbNombreActionPerformed(evt);
             }
         });
 
+        jtfDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfDniKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfDniKeyReleased(evt);
+            }
+        });
+
+        jtfNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfNombreKeyReleased(evt);
+            }
+        });
+
+        jtfApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfApellidoKeyReleased(evt);
+            }
+        });
+
         jbBuscar.setText("Buscar");
+        jbBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbBuscarMouseClicked(evt);
+            }
+        });
 
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -165,11 +218,11 @@ public class Busqueda extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jrbDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(69, 69, 69))
-                            .addComponent(jtfDni, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                            .addComponent(jtfDni))
                         .addGap(81, 81, 81)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jbNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                            .addComponent(jtfNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
+                            .addComponent(jbNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jtfNombre, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jrbNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(1, 1, 1)))
@@ -183,7 +236,7 @@ public class Busqueda extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 19, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jrbDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -192,7 +245,7 @@ public class Busqueda extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfDni)
                     .addComponent(jtfNombre)
-                    .addComponent(jtfApellido, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE))
+                    .addComponent(jtfApellido))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,6 +289,15 @@ public class Busqueda extends javax.swing.JFrame {
         int i = JOptionPane.showConfirmDialog(rootPane, "¿Está seguro que desea cancelar el ingreso de un nuevo paciente?", "Confirmación", WIDTH);
         if(i==0){
             this.setVisible(false);
+            MenuPrincipal menu;
+            try {
+                menu = new MenuPrincipal();
+                menu.setVisible(true);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_jbCancelarActionPerformed
 
@@ -258,6 +320,48 @@ public class Busqueda extends javax.swing.JFrame {
         jtfApellido.disable();
         this.repaint();
     }//GEN-LAST:event_jrbDniActionPerformed
+
+    private void jbBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbBuscarMouseClicked
+         buscar();
+    }//GEN-LAST:event_jbBuscarMouseClicked
+
+    private void jrbDniPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jrbDniPropertyChange
+
+    }//GEN-LAST:event_jrbDniPropertyChange
+
+    private void jrbDniStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbDniStateChanged
+        if(!jrbDni.isSelected()) {
+            jtfDni.setText(null);
+        }
+    }//GEN-LAST:event_jrbDniStateChanged
+
+    private void jrbNombreStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbNombreStateChanged
+        if(!jrbNombre.isSelected()) {
+            jtfNombre.setText(null);
+            jtfApellido.setText(null);
+        }
+    }//GEN-LAST:event_jrbNombreStateChanged
+
+    private void jtfDniKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfDniKeyPressed
+    }//GEN-LAST:event_jtfDniKeyPressed
+
+    private void jtfDniKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfDniKeyReleased
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            buscar();
+        }
+    }//GEN-LAST:event_jtfDniKeyReleased
+
+    private void jtfNombreKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNombreKeyReleased
+       if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            buscar();
+        }
+    }//GEN-LAST:event_jtfNombreKeyReleased
+
+    private void jtfApellidoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfApellidoKeyReleased
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            buscar();
+        }
+    }//GEN-LAST:event_jtfApellidoKeyReleased
 
     /**
      * @param args the command line arguments
@@ -311,4 +415,56 @@ public class Busqueda extends javax.swing.JFrame {
     private javax.swing.JTextField jtfDni;
     private javax.swing.JTextField jtfNombre;
     // End of variables declaration//GEN-END:variables
+
+    private void buscar() {
+        DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
+         while(temp.getRowCount()-1>=0){
+             temp.removeRow(0);
+         }
+        try {
+            GestionBaseDatos bd = new GestionBaseDatos();
+            Connection con = bd.getCx();
+            PreparedStatement ps;
+            if(jrbDni.isSelected() && jtfDni.getText() != null){
+                String doc = jtfDni.getText();
+                ps = con.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where dni=?");
+                ps.setString(1, doc);
+                if(ps.execute()){
+                    ResultSet res= ps.executeQuery();
+                        while(res.next()){
+                            String nombre;
+                            String apellido;
+                            nombre = res.getString("nom_1")+" "+res.getString("nom_2");
+                            apellido = res.getString("ape_1")+" "+res.getString("ape_2");
+                            String dni = res.getString("dni");
+                            Object o[] = {nombre,apellido,dni};
+                            temp.addRow(o);
+                        }
+                }
+            }else{
+                if(jtfNombre.getText() != null || jtfApellido.getText() != null){
+                    String[] nombres = jtfNombre.getText().split(" ");
+                    String[] apellidos = jtfApellido.getText().split(" ");
+                    
+                    ps = con.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? or ape_1 like ?");
+                    ps.setString(1, nombres[0]);
+                    ps.setString(2, apellidos[0]);
+                    if(ps.execute()){
+                        ResultSet res= ps.executeQuery();
+                        while(res.next()){
+                            String nombre;
+                            String apellido;
+                            nombre = res.getString("nom_1")+" "+res.getString("nom_2");
+                            apellido = res.getString("ape_1")+" "+res.getString("ape_2");
+                            String dni = res.getString("dni");
+                            Object o[] = {nombre,apellido,dni};
+                            temp.addRow(o);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }
