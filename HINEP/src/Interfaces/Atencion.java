@@ -1,5 +1,6 @@
 package Interfaces;
 
+import Engine.Paciente;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,6 +25,7 @@ public class Atencion extends javax.swing.JFrame {
     Connection con;
     PreparedStatement ps,pa,pe,pi,po,pu,ps2;
     ResultSet res,res1,res2,res3,res4;
+    private Paciente pac;
     
     public Atencion(javax.swing.JFrame menu, javax.swing.JFrame selec,Connection cn, int id_esp) throws SQLException {
         initComponents();
@@ -46,11 +48,16 @@ public class Atencion extends javax.swing.JFrame {
         res2 = pe.executeQuery();
         res2.next();
         
-        jtfNombre.setText(res1.getString("nom_1")+" "+res1.getString("nom_2")+" "+res1.getString("ape_1")+" "+res1.getString("ape_2"));
-        jtfEdad.setText(res1.getString("fecha_nac"));
-        jtfSexo.setText(res1.getString("sexo"));
+        Paciente p = new Paciente(res1.getString("nom_1"), res1.getString("nom_2"), res1.getString("ape_1"), res1.getString("ape_2"), res1.getString("dni"), res1.getString("fecha_nac"), res1.getString("sexo"), res1.getInt("id_os"), res1.getString("numero_os"));
+        pac=p;
+        String fecha_nac=res1.getString("fecha_nac");
+        
+        
+        jtfNombre.setText(pac.getNombre1()+" "+pac.getNombre2()+" "+pac.getApellido1()+" "+pac.getApellido2());
+        jtfEdad.setText(String.valueOf(pac.calcularEdad()));
+        jtfSexo.setText(pac.getSexo());
         jtfObraSocial.setText(res2.getString("nombre_os"));
-        jtfNumSoc.setText(res1.getString("numero_os"));
+        jtfNumSoc.setText(pac.getNomObraSocial());
         
         jtfNombre.setDisabledTextColor(Color.BLACK);
         jtfEdad.setDisabledTextColor(Color.BLACK);
