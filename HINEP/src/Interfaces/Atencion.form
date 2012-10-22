@@ -1,4 +1,4 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
@@ -88,7 +88,7 @@
                       <Component id="jbInternar" alignment="3" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jbTerminar" pref="23" max="32767" attributes="0"/>
+                  <Component id="jbTerminar" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -104,7 +104,6 @@
                     <LineBorder roundedCorners="true"/>
                   </Border>
                   <Font PropertyName="font" name="SansSerif" size="12" style="0"/>
-                  <Color PropertyName="color" blue="0" green="0" id="black" palette="1" red="0" type="palette"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -154,7 +153,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel1" alignment="3" pref="16" max="32767" attributes="0"/>
+                          <Component id="jLabel1" alignment="3" max="32767" attributes="0"/>
                           <Component id="jtfNombre" alignment="3" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
@@ -164,7 +163,7 @@
                               <Component id="jtfEdad" alignment="3" max="32767" attributes="0"/>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="jLabel3" alignment="3" pref="16" max="32767" attributes="0"/>
+                              <Component id="jLabel3" alignment="3" max="32767" attributes="0"/>
                               <Component id="jtfSexo" alignment="3" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -242,7 +241,6 @@
                     <LineBorder roundedCorners="true"/>
                   </Border>
                   <Font PropertyName="font" name="SansSerif" size="12" style="0"/>
-                  <Color PropertyName="color" blue="0" green="0" id="black" palette="1" red="0" type="palette"/>
                 </TitledBorder>
               </Border>
             </Property>
@@ -372,7 +370,7 @@
                               <EmptySpace min="-2" pref="4" max="-2" attributes="1"/>
                               <Component id="jLabel6" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jtfDiag" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jtfDiag" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -380,20 +378,19 @@
                               <EmptySpace min="-2" pref="4" max="-2" attributes="1"/>
                               <Component id="jLabel7" max="32767" attributes="0"/>
                           </Group>
-                          <Component id="jtfPat" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jtfPat" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jtfPeso" alignment="1" max="32767" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="1"/>
-                              <Component id="jLabel8" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="4" max="-2" attributes="1"/>
-                              <Component id="jLabel9" max="32767" attributes="0"/>
-                          </Group>
                           <Component id="jtfTalla" alignment="1" max="32767" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel8" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                   </Group>

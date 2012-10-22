@@ -15,6 +15,10 @@ import javax.swing.table.DefaultTableModel;
 
 public class Atencion extends javax.swing.JFrame {
 
+    //HOLA MUNDO
+    
+    //prueba1
+    
     javax.swing.JFrame Menu, Selec;
     int id_esperas,id_paciente,pos,controlespera;
     Connection con;
@@ -127,21 +131,21 @@ public class Atencion extends javax.swing.JFrame {
 
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Datos de paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 12), java.awt.Color.black)); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Datos de paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 12))); // NOI18N
 
-        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel1.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel1.setText("Nombre y Apellido:");
 
-        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel2.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel2.setText("Edad:");
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel3.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel3.setText("Sexo:");
 
-        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel4.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel4.setText("Obra Social:");
 
-        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 11));
+        jLabel5.setFont(new java.awt.Font("SansSerif", 0, 11)); // NOI18N
         jLabel5.setText("Numero de Socio:");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -181,7 +185,7 @@ public class Atencion extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(11, 11, 11)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jtfNombre))
                 .addGap(4, 4, 4)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -189,7 +193,7 @@ public class Atencion extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
                         .addComponent(jtfEdad))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 16, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jtfSexo)))
                 .addGap(10, 10, 10)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -200,7 +204,7 @@ public class Atencion extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Historia Clinica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 12), java.awt.Color.black)); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Historia Clinica", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 12))); // NOI18N
 
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -243,16 +247,16 @@ public class Atencion extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Nuevo Diagnóstico", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("SansSerif", 0, 12))); // NOI18N
 
-        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 12));
+        jLabel6.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel6.setText("Diagnóstico:");
 
-        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 12));
+        jLabel7.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel7.setText("Patología");
 
-        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 12));
+        jLabel8.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel8.setText("Peso:");
 
-        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 12));
+        jLabel9.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         jLabel9.setText("Talla:");
 
         try {
@@ -304,23 +308,22 @@ public class Atencion extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jtfDiag))
+                    .addComponent(jtfDiag, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jtfPat))
+                    .addComponent(jtfPat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jtfPeso, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jtfTalla, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jtfTalla, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -392,7 +395,7 @@ public class Atencion extends javax.swing.JFrame {
                     .addComponent(jbPractica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbInternar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
-                .addComponent(jbTerminar, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
+                .addComponent(jbTerminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(19, 19, 19))
         );
 
