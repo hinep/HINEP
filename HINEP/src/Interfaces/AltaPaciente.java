@@ -14,7 +14,8 @@ package Interfaces;
 
 //hola
 
-//Fede, caro, Fede, mariano!!!!
+//Esto es una prueba
+
 public class AltaPaciente extends javax.swing.JFrame {
 
     javax.swing.JFrame Menu;
