@@ -13,6 +13,8 @@ package Interfaces;
 //Pelonchi probando!!!!!!!!!!
 
 //hola
+
+//Fede, caro, Fede, mariano!!!!
 public class AltaPaciente extends javax.swing.JFrame {
 
     javax.swing.JFrame Menu;
