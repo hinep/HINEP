@@ -1,6 +1,20 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
+/*
+ * AltaPaciente.java
+ *
+ * Created on 13/10/2012, 11:57:54
+ */
 package Interfaces;
 
+//Pelonchi probando!!!!!!!!!!
+
+//hola
+
+//Esto es una prueba
 
 public class AltaPaciente extends javax.swing.JFrame {
 

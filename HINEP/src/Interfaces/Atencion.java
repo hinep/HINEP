@@ -15,7 +15,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Atencion extends javax.swing.JFrame {
-   
+
+    //HOLA MUNDO
+    
+    //prueba1
+    
     javax.swing.JFrame Menu, Selec;
     int id_esperas,id_paciente,pos,controlespera;
     Connection con;
