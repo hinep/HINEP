@@ -10,7 +10,7 @@
  */
 package Interfaces;
 
-
+//Pelonchi probando!!!!!!!!!!
 public class AltaPaciente extends javax.swing.JFrame {
 
     javax.swing.JFrame Menu;
