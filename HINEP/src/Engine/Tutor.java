@@ -1,5 +1,11 @@
 package Engine;
 
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * Clase donde se representa a un tutor
  * 
@@ -24,7 +30,24 @@ public class Tutor extends Persona{
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
-
+    
+    public void agregar(java.sql.Connection con){
+        try {
+            PreparedStatement ps = con.prepareStatement("insert into tutores (nom_1,nom_2,ape_1,ape_2,dni,fecha_nac,sexo) values (?,?,?,?,?,?,?)");
+            ps.setString(3, this.getNombre1());
+            ps.setString(4, this.getNombre2());
+            ps.setString(5, this.getApellido1());
+            ps.setString(6, this.getApellido2());
+            ps.setString(7, this.getNroDni());
+            ps.setDate(8, Date.valueOf(this.getFechaNac()));
+            ps.setString(9, this.getSexo());
+            ps.execute();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Paciente.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
     @Override
     void agregar() {
         throw new UnsupportedOperationException("Not supported yet.");
