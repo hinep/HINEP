@@ -11,20 +11,22 @@ import javax.swing.table.DefaultTableModel;
 
 public class SelecciondePaciente extends javax.swing.JFrame {
 
-    javax.swing.JFrame Menu;
-    Connection con;
-    String nombre,apellido,fecha,prioridad;
-    int dni,id_paciente,id_espera;
-    int i,controlespera;
-    ResultSet res;
-    PreparedStatement ps;
+    private javax.swing.JFrame Menu;
+    private Connection con;
+    private String nombre,apellido,fecha,prioridad;
+    private int dni,id_paciente,id_espera;
+    private int i,controlespera;
+    private ResultSet res;
+    private PreparedStatement ps;
+    private int id_personal;
     
-    public SelecciondePaciente(javax.swing.JFrame menu, Connection cn) throws SQLException {
+    public SelecciondePaciente(javax.swing.JFrame menu, Connection cn, int id_per) throws SQLException {
         initComponents();
         Menu=menu;
         con=cn;
         i=0;
         controlespera=0;
+        id_personal=id_per;
         ps = con.prepareStatement("select * from esperas where estado='No Atendido' order by nivel_imp");
         
         res = ps.executeQuery();
@@ -186,8 +188,8 @@ public class SelecciondePaciente extends javax.swing.JFrame {
                         cont++;
                     }
                 
-                int id = res.getInt("id_esperas");
-                Atencion at= new Atencion(Menu,this,con,id);
+                int id_espera = res.getInt("id_esperas");
+                Atencion at= new Atencion(Menu,this,con,id_espera,id_personal);
                 at.setVisible(true);
                 this.setVisible(false);
                 } catch (SQLException ex) {

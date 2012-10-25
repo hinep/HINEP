@@ -30,6 +30,7 @@ public class Principal extends javax.swing.JFrame {
     private String usuario;
     private String pass;
     private int permiso;
+    private int id_personal;
 
     public Principal() throws ClassNotFoundException, SQLException {
         initComponents();
@@ -211,6 +212,7 @@ public class Principal extends javax.swing.JFrame {
                 if (rs.next()) {
                     permiso = rs.getInt(3);
                     System.out.println(permiso);
+                    id_personal = rs.getInt(2);
                     ingresar();
                 } else {
                     jlbError2.setVisible(true);
@@ -254,7 +256,7 @@ public class Principal extends javax.swing.JFrame {
                 // Usuario del sector de atención en consultorio
                 SelecciondePaciente atenPaciente;
                 try {
-                    atenPaciente = new SelecciondePaciente(this, conexion);
+                    atenPaciente = new SelecciondePaciente(this, conexion, id_personal);
                     atenPaciente.setVisible(true);
                     this.setVisible(false);
                 } catch (SQLException ex) {
