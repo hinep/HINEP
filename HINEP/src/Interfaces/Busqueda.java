@@ -10,7 +10,6 @@
  */
 package Interfaces;
 
-import Engine.GestionBaseDatos;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -29,15 +28,48 @@ import javax.swing.table.DefaultTableModel;
 public class Busqueda extends javax.swing.JFrame {
 
     javax.swing.JFrame Menu;
-    /** Creates new form Busqueda */
+    private boolean esPa;
+    private int idPac;
+    
+    /** Creates new form Busqueda 
+     *  para Paciente
+     */
     public Busqueda(javax.swing.JFrame menu, Connection cn) {
         
         initComponents();
         this.conexion = cn;
         this.Menu = menu;
-        
+        this.esPa = true;
+        jlRelleno.setVisible(false);
+        jlDni.setVisible(false);
+        jlNa.setVisible(false);
+        jlSele.setVisible(false);
         grupodebotones.add(jrbDni);
         grupodebotones.add(jrbNombre);
+        jrbDni.setSelected(true);
+        jtfApellido.setDisabledTextColor(Color.red);
+        jtfNombre.setDisabledTextColor(Color.red);
+        jtfApellido.disable();
+        jtfNombre.disable();
+    }
+    
+    /** Creates new form Busqueda 
+     *  para Tutor
+     */
+     public Busqueda(javax.swing.JFrame menu, Connection cn, int idPa) {
+        
+        initComponents();
+        this.conexion = cn;
+        this.Menu = menu;
+        this.esPa = false;
+        this.idPac = idPa;
+        jlRelleno.setVisible(false);
+        jlDni.setVisible(false);
+        jlNa.setVisible(false);
+        jlSele.setVisible(false);
+        grupodebotones.add(jrbDni);
+        grupodebotones.add(jrbNombre);
+        jLabel1.setText("Buscar tutor por:");
         jrbDni.setSelected(true);
         jtfApellido.setDisabledTextColor(Color.red);
         jtfNombre.setDisabledTextColor(Color.red);
@@ -69,6 +101,10 @@ public class Busqueda extends javax.swing.JFrame {
         jbSiguiente = new javax.swing.JButton();
         jbCancelar = new javax.swing.JButton();
         jbNuevo = new javax.swing.JButton();
+        jlDni = new javax.swing.JLabel();
+        jlRelleno = new javax.swing.JLabel();
+        jlNa = new javax.swing.JLabel();
+        jlSele = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,7 +204,7 @@ public class Busqueda extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,6 +232,19 @@ public class Busqueda extends javax.swing.JFrame {
             }
         });
 
+        jlDni.setForeground(new java.awt.Color(204, 0, 0));
+        jlDni.setText(" *");
+
+        jlRelleno.setForeground(new java.awt.Color(204, 0, 0));
+        jlRelleno.setText("Rellene el campo marcado con *");
+
+        jlNa.setForeground(new java.awt.Color(204, 0, 0));
+        jlNa.setText(" *");
+
+        jlSele.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jlSele.setForeground(new java.awt.Color(204, 0, 0));
+        jlSele.setText("* DEBE SELECCIONAR UN PACIENTE");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -206,22 +255,28 @@ public class Busqueda extends javax.swing.JFrame {
                         .addGap(52, 52, 52)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-                                .addGap(341, 341, 341))
+                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(31, 31, 31)
+                                .addComponent(jlRelleno)
+                                .addGap(238, 238, 238))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(172, 172, 172)
-                                .addComponent(jbCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                                .addComponent(jbCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jbSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE))
+                                .addComponent(jbSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(124, 124, 124)
+                        .addGap(75, 75, 75)
+                        .addComponent(jlDni, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jrbDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(69, 69, 69))
                             .addComponent(jtfDni))
-                        .addGap(81, 81, 81)
+                        .addGap(60, 60, 60)
+                        .addComponent(jlNa, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jbNuevo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jtfNombre, javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,15 +285,21 @@ public class Busqueda extends javax.swing.JFrame {
                                 .addGap(1, 1, 1)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jbBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
-                            .addComponent(jtfApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))))
+                            .addComponent(jbBuscar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jtfApellido, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(27, 27, 27))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(jlSele)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jlRelleno))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jrbDni, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -247,7 +308,9 @@ public class Busqueda extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtfDni)
                     .addComponent(jtfNombre)
-                    .addComponent(jtfApellido))
+                    .addComponent(jtfApellido)
+                    .addComponent(jlDni)
+                    .addComponent(jlNa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -258,7 +321,9 @@ public class Busqueda extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(45, 45, 45))
+                .addGap(18, 18, 18)
+                .addComponent(jlSele)
+                .addGap(13, 13, 13))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -282,9 +347,40 @@ public class Busqueda extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSiguienteActionPerformed
-        GenerarEspera ge= new GenerarEspera(Menu,this);
+        jlSele.setVisible(false);
+        //Controla si hay una fila seleccionada
+        if(jtTabla.getSelectedRow()!= -1){
+            //Controla si es busqueda de paciente
+            if(esPa){
+                //Toma el dni de la fila seleccionada y lo busca en la tabla paciente,
+                //para obtener el id_paciente y pasarlo a la busqueda de tutor
+                int indice = jtTabla.getSelectedRow();
+                String dni = (String) jtTabla.getValueAt(indice, 2);
+                PreparedStatement ps;
+                try {
+                    ps = conexion.prepareStatement("select id_paciente from pacientes where dni=?");
+                    ps.setString(1, dni);
+                    ResultSet res= ps.executeQuery();
+                    if(res.next()){
+                        this.idPac = res.getInt("id_paciente");
+                        new Busqueda(this, conexion, idPac).setVisible(true);
+                        this.setVisible(false);
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                //
+                GenerarEspera ge = new GenerarEspera(Menu, this, conexion, this.idPac);
+                ge.setVisible(true);
+                this.setVisible(false);
+            }
+        }else{
+            jlSele.setVisible(true);
+        }        
+        /*GenerarEspera ge= new GenerarEspera(Menu,this);
         ge.setVisible(true);
-        this.setVisible(false);
+        this.setVisible(false);*/
     }//GEN-LAST:event_jbSiguienteActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
@@ -292,18 +388,13 @@ public class Busqueda extends javax.swing.JFrame {
         if(i==0){
             this.setVisible(false);
             Menu menu;
-            try {
-                GestionBaseDatos bd = new GestionBaseDatos();
-                menu = new Menu(bd.getCx());
-                menu.setVisible(true);
-            } catch (SQLException ex) {
-                Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            menu = new Menu(conexion);
+            menu.setVisible(true);
         }
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
-        NuevoPaciente nu = new NuevoPaciente(this, rootPaneCheckingEnabled);
+        NuevoPaciente nu = new NuevoPaciente(this, rootPaneCheckingEnabled,conexion);
         nu.setVisible(true);
     }//GEN-LAST:event_jbNuevoActionPerformed
 
@@ -410,6 +501,10 @@ public class Busqueda extends javax.swing.JFrame {
     private javax.swing.JButton jbCancelar;
     private javax.swing.JButton jbNuevo;
     private javax.swing.JButton jbSiguiente;
+    private javax.swing.JLabel jlDni;
+    private javax.swing.JLabel jlNa;
+    private javax.swing.JLabel jlRelleno;
+    private javax.swing.JLabel jlSele;
     private javax.swing.JRadioButton jrbDni;
     private javax.swing.JRadioButton jrbNombre;
     private javax.swing.JTable jtTabla;
@@ -419,50 +514,131 @@ public class Busqueda extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void buscar() {
+        jlRelleno.setVisible(false);
+        jlDni.setVisible(false);
+        jlNa.setVisible(false);
         DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
-         while(temp.getRowCount()-1>=0){
-             temp.removeRow(0);
-         }
-        try {
-            GestionBaseDatos bd = new GestionBaseDatos();
-            Connection con = bd.getCx();
-            PreparedStatement ps;
-            if(jrbDni.isSelected() && jtfDni.getText() != null){
-                String doc = jtfDni.getText();
-                ps = con.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where dni=?");
-                ps.setString(1, doc);
-                if(ps.execute()){
-                    ResultSet res= ps.executeQuery();
-                        while(res.next()){
-                            String nombre;
-                            String apellido;
-                            nombre = res.getString("nom_1")+" "+res.getString("nom_2");
-                            apellido = res.getString("ape_1")+" "+res.getString("ape_2");
-                            String dni = res.getString("dni");
-                            Object o[] = {nombre,apellido,dni};
-                            temp.addRow(o);
-                        }
+        while(temp.getRowCount()-1>=0){
+            temp.removeRow(0);
+        }
+            if(jrbDni.isSelected()){
+                if(!jtfDni.getText().equals("")){
+                    if(esPa){
+                        buscarPacienteDni();
+                    }else{
+                        buscarTutorDni();
+                    }
+                }else{
+                    jlRelleno.setVisible(true);
+                    jlDni.setVisible(true);
                 }
             }else{
-                if(jtfNombre.getText() != null || jtfApellido.getText() != null){
-                    String[] nombres = jtfNombre.getText().split(" ");
-                    String[] apellidos = jtfApellido.getText().split(" ");
-                    
-                    ps = con.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? or ape_1 like ?");
-                    ps.setString(1, nombres[0]);
-                    ps.setString(2, apellidos[0]);
-                    if(ps.execute()){
-                        ResultSet res= ps.executeQuery();
-                        while(res.next()){
-                            String nombre;
-                            String apellido;
-                            nombre = res.getString("nom_1")+" "+res.getString("nom_2");
-                            apellido = res.getString("ape_1")+" "+res.getString("ape_2");
-                            String dni = res.getString("dni");
-                            Object o[] = {nombre,apellido,dni};
-                            temp.addRow(o);
-                        }
-                    }
+                if(!jtfNombre.getText().equals("") || !jtfApellido.getText().equals("")){
+                    if(esPa){
+                        buscarPacienteNa();
+                    }else{
+                        buscarTutorNa();
+                    }                    
+                }else{
+                    jlRelleno.setVisible(true);
+                    jlNa.setVisible(true);
+                }
+            }
+    }
+
+    private void buscarPacienteDni() {
+        try {
+            DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
+            PreparedStatement ps;
+            String doc = jtfDni.getText();
+            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where dni=?");
+            ps.setString(1, doc);
+            if(ps.execute()){
+                ResultSet res= ps.executeQuery();
+                while(res.next()){
+                    String nombre;
+                    String apellido;
+                    nombre = res.getString("nom_1")+" "+res.getString("nom_2");
+                    apellido = res.getString("ape_1")+" "+res.getString("ape_2");
+                    String dni = res.getString("dni");
+                    Object o[] = {nombre,apellido,dni};
+                    temp.addRow(o);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void buscarTutorDni() {
+        try {
+            DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
+            PreparedStatement ps;
+            String doc = jtfDni.getText();
+            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where dni=?");
+            ps.setString(1, doc);
+            if(ps.execute()){
+                ResultSet res= ps.executeQuery();
+                while(res.next()){
+                    String nombre;
+                    String apellido;
+                    nombre = res.getString("nom_1")+" "+res.getString("nom_2");
+                    apellido = res.getString("ape_1")+" "+res.getString("ape_2");
+                    String dni = res.getString("dni");
+                    Object o[] = {nombre,apellido,dni};
+                    temp.addRow(o);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void buscarPacienteNa() {
+        try {
+            String[] nombres = jtfNombre.getText().split(" ");
+            String[] apellidos = jtfApellido.getText().split(" ");
+            PreparedStatement ps;
+            DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
+            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? or ape_1 like ?");
+            ps.setString(1, nombres[0].toUpperCase());
+            ps.setString(2, apellidos[0].toUpperCase());
+            if(ps.execute()){
+                ResultSet res= ps.executeQuery();
+                while(res.next()){
+                    String nombre;
+                    String apellido;
+                    nombre = res.getString("nom_1")+" "+res.getString("nom_2");
+                    apellido = res.getString("ape_1")+" "+res.getString("ape_2");
+                    String dni = res.getString("dni");
+                    Object o[] = {nombre,apellido,dni};
+                    temp.addRow(o);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void buscarTutorNa() {
+        try {
+            String[] nombres = jtfNombre.getText().split(" ");
+            String[] apellidos = jtfApellido.getText().split(" ");
+            PreparedStatement ps;
+            DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
+            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ? or ape_1 like ?");
+            ps.setString(1, nombres[0].toUpperCase());
+            ps.setString(2, apellidos[0].toUpperCase());
+            if(ps.execute()){
+                ResultSet res= ps.executeQuery();
+                while(res.next()){
+                    String nombre;
+                    String apellido;
+                    nombre = res.getString("nom_1")+" "+res.getString("nom_2");
+                    apellido = res.getString("ape_1")+" "+res.getString("ape_2");
+                    String dni = res.getString("dni");
+                    Object o[] = {nombre,apellido,dni};
+                    temp.addRow(o);
                 }
             }
         } catch (SQLException ex) {

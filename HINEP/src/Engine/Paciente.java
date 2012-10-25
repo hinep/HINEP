@@ -41,11 +41,8 @@ public class Paciente extends Persona{
         this.nroObraSocial = nroObraSocial;
     }
             
-    @Override
-    public void agregar() {
+    public void agregar(Connection con) {
         try {
-            GestionBaseDatos bd = new GestionBaseDatos();
-            Connection con = bd.getCx();
             PreparedStatement ps = con.prepareStatement("insert into pacientes (id_os,numero_os,nom_1,nom_2,ape_1,ape_2,dni,fecha_nac,sexo) values (?,?,?,?,?,?,?,?,?)");
             ps.setInt(1, this.getNroObraSocial());
             ps.setString(2, this.getNomObraSocial());
@@ -72,6 +69,9 @@ public class Paciente extends Persona{
     public void modificar() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-    
-    
+
+    @Override
+    void agregar() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
