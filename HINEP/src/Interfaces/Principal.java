@@ -28,7 +28,6 @@ public class Principal extends javax.swing.JFrame {
 
     private Connection conexion;
     private Statement st;
-    private ResultSet rs;
     private String usuario;
     private String pass;
     private int permiso;
@@ -216,7 +215,8 @@ public class Principal extends javax.swing.JFrame {
             jlbError1.setVisible(true);
         } else {
             try {
-                this.rs = st.executeQuery("SELECT * FROM usuarios WHERE usuario = '" + usuario + "' and pass = '" + pass + "'");
+                ResultSet rs;
+                rs = st.executeQuery("SELECT * FROM usuarios WHERE usuario = '" + usuario + "' and pass = '" + pass + "'");
                 if (rs.next()) {
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     Date fechaSistema = new Date();
@@ -224,18 +224,18 @@ public class Principal extends javax.swing.JFrame {
                     permiso = rs.getInt(3);
                     System.out.println(permiso);
                     id_personal = rs.getInt(2);
-                    this.rs = st.executeQuery("SELECT * FROM guardias WHERE id_personal = '" + id_personal + "' and fecha = '" + fecha + "'");
+                    rs = st.executeQuery("SELECT * FROM guardias WHERE id_personal = '" + id_personal + "' and fecha = '" + fecha + "'");
                     System.out.println("1");
                     if (rs.next()) {
                         System.out.println("2");
                         ingresar();
                     } else {
                         System.out.println("3");
-                        this.rs = st.executeQuery("SELECT * FROM guardias WHERE id_personal = '" + id_personal + "' and id_cargo = 9");
+                        rs = st.executeQuery("SELECT * FROM guardias WHERE id_personal = '" + id_personal + "' and id_cargo = 9");
                         if (rs.next()) {
                             System.out.println("4");
-                        ingresar();
-                        }else{
+                            ingresar();
+                        } else {
                             jlbError3.setVisible(true);
                         }
                     }
@@ -262,7 +262,7 @@ public class Principal extends javax.swing.JFrame {
         conexion = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/hinep", "postgres", "admin");
         st = conexion.createStatement();
     }
-
+   
     private void ingresar() {
         // Según el permiso de usuario, podrá acceder al sector correspondiente
         switch (permiso) {
