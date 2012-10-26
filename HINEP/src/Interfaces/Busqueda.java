@@ -388,8 +388,8 @@ public class Busqueda extends javax.swing.JFrame {
         if(i==0){
             this.setVisible(false);
             Menu menu;
-            menu = new Menu(conexion);
-            menu.setVisible(true);
+            /*menu = new Menu(conexion,);
+            menu.setVisible(true);*/
         }
     }//GEN-LAST:event_jbCancelarActionPerformed
 
