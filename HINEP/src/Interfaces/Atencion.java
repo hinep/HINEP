@@ -15,19 +15,21 @@ import javax.swing.table.DefaultTableModel;
 
 public class Atencion extends javax.swing.JFrame {
 
-    javax.swing.JFrame Menu, Selec;
-    int id_esperas,id_paciente,pos,controlespera;
-    Connection con;
-    PreparedStatement ps,pa,pe,pi,po,pu,ps2;
-    ResultSet res,res1,res2,res3,res4;
+    private javax.swing.JFrame Menu, Selec;
+    private int id_esperas,id_paciente,pos,controlespera;
+    private Connection con;
+    private PreparedStatement ps,pa,pe,pi,po,pu,ps2;
+    private ResultSet res,res1,res2,res3,res4;
     private Paciente pac;
+    private int id_personal;
     
-    public Atencion(javax.swing.JFrame menu, javax.swing.JFrame selec,Connection cn, int id_esp) throws SQLException {
+    public Atencion(javax.swing.JFrame menu, javax.swing.JFrame selec,Connection cn, int id_esp, int id_per) throws SQLException {
         initComponents();
         Menu = menu;
         Selec=selec;
         id_esperas=id_esp;
         con=cn;
+        id_personal=id_per;
         ps = con.prepareStatement("select * from esperas where id_esperas=?");
         ps.setInt(1, id_esperas);        
         res = ps.executeQuery();
@@ -435,10 +437,7 @@ public class Atencion extends javax.swing.JFrame {
                 
                 if(controlespera!=1){
                     id_hc=0;
-                }
-                
-                int id_per = 1;
-   
+                } 
                 
                 //configurar fecha
                 SimpleDateFormat[] sdfs = {new SimpleDateFormat("yyyy-MM-dd")};
@@ -461,7 +460,7 @@ public class Atencion extends javax.swing.JFrame {
                     po = con.prepareStatement("insert into historias_clinicas(id_historia, id_personal, id_paciente, fecha, hora, peso, talla, diagnostico, patologia) values (?, ?, ?, '"+sdf.format(d)+"', '"+fhd2.format(hora)+"', ?, ?, ?, ?);");
                     
                     po.setInt(1, id_hc);
-                    po.setInt(2, id_per);
+                    po.setInt(2, id_personal);
                     po.setInt(3, id_paciente);
                     po.setString(4, jtfPeso.getText());
                     po.setString(5, jtfTalla.getText());

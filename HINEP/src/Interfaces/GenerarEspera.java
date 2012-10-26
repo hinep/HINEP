@@ -201,7 +201,7 @@ public class GenerarEspera extends javax.swing.JFrame {
                 } catch (SQLException ex) {
                     Logger.getLogger(GenerarEspera.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                new Menu(conexion).setVisible(true);
+                new Busqueda(Menu, conexion).setVisible(true);
                 this.setVisible(false);
             }else{
                 if(i==1){
