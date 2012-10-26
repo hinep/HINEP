@@ -6,7 +6,7 @@ package Engine;
 
 /**
  *
- * @author Administrador
+ * @author SySoft
  */
 public class Indicaciones {
     private int idIndicacion;

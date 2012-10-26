@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class GenerarEspera extends javax.swing.JFrame {
 
@@ -182,21 +183,32 @@ public class GenerarEspera extends javax.swing.JFrame {
                     prioridad = "MEDIA";
                 }
             }
-            try {
-                Calendar cal = Calendar.getInstance();
-                String fecha = cal.get(Calendar.YEAR)+"-"+cal.get(Calendar.MONTH)+"-"+cal.get(Calendar.DATE);
-                PreparedStatement ps = conexion.prepareStatement("insert into esperas (id_paciente, fecha, sintomas, nivel_imp, estado) values (?,?,?,?,?))");
-                ps.setInt(1, idPa);
-                ps.setDate(2, Date.valueOf(fecha));
-                ps.setString(3, jTextArea1.getText().toUpperCase());
-                ps.setString(4, prioridad);
-                ps.setString(5, "ESPERANDO");
-                ps.execute();
-            } catch (SQLException ex) {
-                Logger.getLogger(GenerarEspera.class.getName()).log(Level.SEVERE, null, ex);
+            int i;
+            i=JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que desea agregar a lista de espera?", "Confirmación", WIDTH);
+            if(i==0){
+                try {
+                    Calendar cal = Calendar.getInstance();
+                    String fecha = cal.get(Calendar.YEAR)+"-"+cal.get(Calendar.MONTH+1)+"-"+cal.get(Calendar.DATE);
+                    PreparedStatement ps = conexion.prepareStatement("insert into esperas (id_paciente, fecha, sintomas, nivel_imp, estado) values (?,?,?,?,?)");
+                    ps.setInt(1, idPa);
+                    ps.setDate(2, Date.valueOf(fecha));
+                    ps.setString(3, jTextArea1.getText().toUpperCase());
+                    ps.setString(4, prioridad);
+                    ps.setString(5, "ESPERANDO");
+                    if(ps.execute()){
+
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(GenerarEspera.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                new Menu(conexion).setVisible(true);
+                this.setVisible(false);
+            }else{
+                if(i==1){
+                    Menu.setVisible(true);
+                    this.setVisible(false);
+                }
             }
-            Menu.setVisible(true);
-            this.setVisible(false);
         }
     }
         // TODO add your handling code here:}//GEN-LAST:event_jbGenerarActionPerformed

@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 /**
  *
- * @author pc
+ * @author SySoft
  */
 public class Principal extends javax.swing.JFrame {
 

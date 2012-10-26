@@ -7,7 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -44,7 +43,7 @@ public class Atencion extends javax.swing.JFrame {
         res2 = pe.executeQuery();
         res2.next();
         
-        Paciente p = new Paciente(res1.getString("nom_1"), res1.getString("nom_2"), res1.getString("ape_1"), res1.getString("ape_2"), res1.getString("dni"), res1.getString("fecha_nac"), res1.getString("sexo"), res1.getInt("id_os"), res1.getString("numero_os"));
+        Paciente p = new Paciente(res1.getString("nom_1"), res1.getString("nom_2"), res1.getString("ape_1"), res1.getString("ape_2"), res1.getString("dni"), res1.getString("fecha_nac"), res1.getString("sexo"), res1.getInt("id_os"), res1.getString("numero_os"), res1.getString("domicilio"));
         pac=p;
         String fecha_nac=res1.getString("fecha_nac");
         

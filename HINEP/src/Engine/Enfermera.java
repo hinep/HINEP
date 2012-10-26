@@ -7,14 +7,14 @@ package Engine;
 
 /**
  *
- * @author Administrador
+ * @author SySoft
  */
 public class Enfermera extends Persona{
     private int licencia;
     private String puesto;
     
-    public Enfermera(String nom1, String nom2, String ape1, String ape2, String dni, String fecNac,String sexo){
-        super(nom1, nom2, ape1, ape2, dni, fecNac, sexo);
+    public Enfermera(String nom1, String nom2, String ape1, String ape2, String dni, String fecNac, String sexo, String domi){
+        super(nom1, nom2, ape1, ape2, dni, fecNac, sexo, domi);
     }
     public int getLicencia() {
         return licencia;

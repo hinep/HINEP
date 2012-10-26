@@ -7,7 +7,7 @@ package Engine;
 
 /**
  *
- * @author Administrador
+ * @author SySoft
  */
 public class Espera {
     private int idEspera;

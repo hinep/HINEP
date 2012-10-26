@@ -13,7 +13,7 @@ import java.util.GregorianCalendar;
 
 /**
  *
- * @author Administrador
+ * @author SySoft
  */
 public abstract class Persona {
     private int id;
@@ -26,7 +26,10 @@ public abstract class Persona {
     private String fechaNac;
     private String sexo;
 
-    public Persona(String nom1, String nom2, String ape1, String ape2, String dni, String fecNac,String sexo){
+    /** Crea una Persona
+     *  Paciente/Tutor/Medico/Enfermera
+     */
+    public Persona(String nom1, String nom2, String ape1, String ape2, String dni, String fecNac,String sexo, String domi){
         this.apellido1 = ape1;
         this.apellido2 = ape2;
         this.fechaNac = fecNac;
@@ -34,6 +37,7 @@ public abstract class Persona {
         this.nombre2 = nom2;
         this.nroDni = dni;
         this.sexo = sexo;
+        this.domicilio = domi;
     }
     
     public String getSexo() {

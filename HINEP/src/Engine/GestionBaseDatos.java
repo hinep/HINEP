@@ -12,7 +12,7 @@ import java.sql.Statement;
 
 /**
  *
- * @author carolina
+ * @author SySoft
  */
 public class GestionBaseDatos {
 

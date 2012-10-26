@@ -7,7 +7,7 @@ package Engine;
 
 /**
  *
- * @author Administrador
+ * @author SySoft
  */
 public class Medicacion {
     private int idMedicacion;

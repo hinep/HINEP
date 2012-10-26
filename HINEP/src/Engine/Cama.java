@@ -5,9 +5,8 @@
 package Engine;
 
 /**
- * X DIOSSSSSSSS Q SALGA!!!!!
- * Salioooooooooooo!
- * @author Administrador
+ * 
+ * @author SySoft
  */
 public class Cama {
     private int idCama;

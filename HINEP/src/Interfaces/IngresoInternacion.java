@@ -12,7 +12,7 @@ package Interfaces;
 
 /**
  *
- * @author pc
+ * @author SySoft
  */
 public class IngresoInternacion extends javax.swing.JDialog {
 

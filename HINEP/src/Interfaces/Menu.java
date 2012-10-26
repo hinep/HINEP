@@ -8,7 +8,7 @@ import java.sql.Connection;
 
 /**
  *
- * @author carolina
+ * @author SySoft
  */
 public class Menu extends javax.swing.JFrame {
 

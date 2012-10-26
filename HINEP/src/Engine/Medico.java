@@ -7,14 +7,14 @@ package Engine;
 
 /**
  *
- * @author Administrador
+ * @author SySoft
  */
 public class Medico extends Persona{
     private int matricula;
     private String cargo;
     
-    public Medico(String nom1, String nom2, String ape1, String ape2, String dni, String fecNac,String sexo, int tel){
-        super(nom1, nom2, ape1, ape2, dni, fecNac, sexo);
+    public Medico(String nom1, String nom2, String ape1, String ape2, String dni, String fecNac,String sexo, int tel, String domi){
+        super(nom1, nom2, ape1, ape2, dni, fecNac, sexo, domi);
     }
     
     public String getCargo() {

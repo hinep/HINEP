@@ -1,9 +1,4 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
  * Busqueda.java
  *
  * Created on 11/10/2012, 21:02:17
@@ -23,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author pc
+ * @author SySoft
  */
 public class Busqueda extends javax.swing.JFrame {
 
@@ -35,7 +30,6 @@ public class Busqueda extends javax.swing.JFrame {
      *  para Paciente
      */
     public Busqueda(javax.swing.JFrame menu, Connection cn) {
-        
         initComponents();
         this.conexion = cn;
         this.Menu = menu;
@@ -57,7 +51,6 @@ public class Busqueda extends javax.swing.JFrame {
      *  para Tutor
      */
      public Busqueda(javax.swing.JFrame menu, Connection cn, int idPa) {
-        
         initComponents();
         this.conexion = cn;
         this.Menu = menu;
@@ -370,36 +363,50 @@ public class Busqueda extends javax.swing.JFrame {
                     Logger.getLogger(Busqueda.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }else{
-                //
+                //En caso de ser Tutor pasa a la siguiente interfaz
                 GenerarEspera ge = new GenerarEspera(Menu, this, conexion, this.idPac);
                 ge.setVisible(true);
                 this.setVisible(false);
             }
         }else{
             jlSele.setVisible(true);
-        }        
-        /*GenerarEspera ge= new GenerarEspera(Menu,this);
-        ge.setVisible(true);
-        this.setVisible(false);*/
+        }
     }//GEN-LAST:event_jbSiguienteActionPerformed
 
     private void jbCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbCancelarActionPerformed
         int i = JOptionPane.showConfirmDialog(rootPane, "¿Está seguro que desea cancelar el ingreso de un nuevo paciente?", "Confirmación", WIDTH);
-        if(i==0){
-            this.setVisible(false);
-            Menu menu;
-            menu = new Menu(conexion);
-            menu.setVisible(true);
+        //Si cancela el ingreso del paciente vuelve al menu
+        if(esPa){
+            if(i == 0){
+                jtfDni.setText("");
+                jtfApellido.setText("");
+                jtfNombre.setText("");
+                //Se eliminan las posibles filas de una búsqueda anterior
+                DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
+                while(temp.getRowCount()-1>=0){
+                    temp.removeRow(0);
+                }
+            }
+        }else{
+            if(i == 0){
+                new Busqueda(Menu, conexion).setVisible(true);
+                this.setVisible(false);
+            }
         }
     }//GEN-LAST:event_jbCancelarActionPerformed
 
     private void jbNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbNuevoActionPerformed
-        NuevoPaciente nu = new NuevoPaciente(this, rootPaneCheckingEnabled,conexion);
-        nu.setVisible(true);
+        //Comprueba si se desea ingresar un nuevo paciente o un nuevo tutor
+        if(esPa){
+            NuevoPaciente nu = new NuevoPaciente(this, rootPaneCheckingEnabled,conexion);
+            nu.setVisible(true);
+        }else{
+            NuevoTutor nt = new NuevoTutor(this, rootPaneCheckingEnabled, conexion);
+            nt.setVisible(true);
+        }
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jrbNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbNombreActionPerformed
-        jtfDni.setDisabledTextColor(Color.red);
         jtfDni.disable();
         jtfNombre.enable();
         jtfApellido.enable();
@@ -422,12 +429,15 @@ public class Busqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_jrbDniPropertyChange
 
     private void jrbDniStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbDniStateChanged
+        //Si no esta seleccionado DNI se borra lo que haya en el campo de texto
         if(!jrbDni.isSelected()) {
             jtfDni.setText(null);
         }
     }//GEN-LAST:event_jrbDniStateChanged
 
     private void jrbNombreStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jrbNombreStateChanged
+       // Si no esta seleccionado Nombre y Apellido se borra el contenido
+       // de los campos de texto
         if(!jrbNombre.isSelected()) {
             jtfNombre.setText(null);
             jtfApellido.setText(null);
@@ -455,41 +465,6 @@ public class Busqueda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtfApellidoKeyReleased
 
-    /**
-     * @param args the command line arguments
-     */
-    /*public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        /*try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Busqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Busqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Busqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Busqueda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-       /* java.awt.EventQueue.invokeLater(new Runnable() {
-
-            public void run() {
-                new Busqueda().setVisible(true);
-            }
-        });
-    }*/
     private Connection conexion;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grupodebotones;
@@ -517,42 +492,50 @@ public class Busqueda extends javax.swing.JFrame {
         jlRelleno.setVisible(false);
         jlDni.setVisible(false);
         jlNa.setVisible(false);
+        //Se eliminan las posibles filas de una búsqueda anterior
         DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
         while(temp.getRowCount()-1>=0){
             temp.removeRow(0);
         }
-            if(jrbDni.isSelected()){
-                if(!jtfDni.getText().equals("")){
-                    if(esPa){
-                        buscarPacienteDni();
-                    }else{
-                        buscarTutorDni();
-                    }
+        //Comprueba si está seleccionada la busqueda por DNI o Nombre y Apellido
+        if(jrbDni.isSelected()){
+            //Comprueba que el campo de texto no sea vacio
+            if(!jtfDni.getText().equals("")){
+                //Comprueba si se busca un paciente o un tutor
+                if(esPa){
+                    buscarPacienteDni();
                 }else{
-                    jlRelleno.setVisible(true);
-                    jlDni.setVisible(true);
+                    buscarTutorDni();
                 }
             }else{
-                if(!jtfNombre.getText().equals("") || !jtfApellido.getText().equals("")){
-                    if(esPa){
-                        buscarPacienteNa();
-                    }else{
-                        buscarTutorNa();
-                    }                    
-                }else{
-                    jlRelleno.setVisible(true);
-                    jlNa.setVisible(true);
-                }
+                jlRelleno.setVisible(true);
+                jlDni.setVisible(true);
             }
+        }else{
+            //Comprueba que por lo menos un campo de texto no sea vacio
+            if(!jtfNombre.getText().equals("") || !jtfApellido.getText().equals("")){
+                //Comprueba si se busca un paciente o un tutor
+                if(esPa){
+                    buscarPacienteNa();
+                }else{
+                    buscarTutorNa();
+                }                    
+            }else{
+                jlRelleno.setVisible(true);
+                jlNa.setVisible(true);
+            }
+        }
     }
 
     private void buscarPacienteDni() {
         try {
+            //Se hace una consulta a la BBDD buscando al paciente
             DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
             PreparedStatement ps;
             String doc = jtfDni.getText();
             ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where dni=?");
             ps.setString(1, doc);
+            //Si la consulta se ejecuta correctamente se agregan los resultados a la tabla
             if(ps.execute()){
                 ResultSet res= ps.executeQuery();
                 while(res.next()){
@@ -572,11 +555,13 @@ public class Busqueda extends javax.swing.JFrame {
 
     private void buscarTutorDni() {
         try {
+            //Se hace una consulta a la BBDD buscando al tutor
             DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
             PreparedStatement ps;
             String doc = jtfDni.getText();
             ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where dni=?");
             ps.setString(1, doc);
+            //Si la consulta se ejecuta correctamente se agregan los resultados a la tabla
             if(ps.execute()){
                 ResultSet res= ps.executeQuery();
                 while(res.next()){
@@ -596,13 +581,34 @@ public class Busqueda extends javax.swing.JFrame {
 
     private void buscarPacienteNa() {
         try {
+            //Crea vectores con nombres y apelldios
             String[] nombres = jtfNombre.getText().split(" ");
             String[] apellidos = jtfApellido.getText().split(" ");
             PreparedStatement ps;
             DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
-            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? or ape_1 like ?");
-            ps.setString(1, nombres[0].toUpperCase());
-            ps.setString(2, apellidos[0].toUpperCase());
+            //Se comprueba si ambos vectores tiene longitud 1
+            if(nombres.length == 1 && apellidos.length == 1){
+                ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? or ape_1 like ?");
+                ps.setString(1, nombres[0].toUpperCase());
+                ps.setString(2, apellidos[0].toUpperCase());
+            }else{
+                ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? or ape_1 like ? or nom_2 like ? or ape_2 like ?");
+                ps.setString(1, nombres[0].toUpperCase());
+                ps.setString(2, apellidos[0].toUpperCase());
+                //Se comprueba si el vector nombres tiene solo un elemento
+                if(nombres.length == 1){
+                    ps.setString(3, "");
+                }else{
+                    ps.setString(3, nombres[1]);
+                }
+                //Se comprueba si el vector apellidos tiene solo un elemento
+                if(apellidos.length == 1){
+                    ps.setString(4, "");
+                }else{
+                    ps.setString(4, apellidos[1]);
+                }
+            }
+            //Si la consulta se ejecuta correctamente se agregan los resultados a la tabla
             if(ps.execute()){
                 ResultSet res= ps.executeQuery();
                 while(res.next()){
@@ -622,13 +628,34 @@ public class Busqueda extends javax.swing.JFrame {
     
     private void buscarTutorNa() {
         try {
+            //Crea vectores con nombres y apelldios
             String[] nombres = jtfNombre.getText().split(" ");
             String[] apellidos = jtfApellido.getText().split(" ");
             PreparedStatement ps;
             DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
-            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ? or ape_1 like ?");
-            ps.setString(1, nombres[0].toUpperCase());
-            ps.setString(2, apellidos[0].toUpperCase());
+            //Se comprueba si ambos vectores tiene longitud 1
+            if(nombres.length == 1 && apellidos.length == 1){
+                ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ? or ape_1 like ?");
+                ps.setString(1, nombres[0].toUpperCase());
+                ps.setString(2, apellidos[0].toUpperCase());
+            }else{
+                ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ? or ape_1 like ? or nom_2 like ? or ape_2 like ?");
+                ps.setString(1, nombres[0].toUpperCase());
+                ps.setString(2, apellidos[0].toUpperCase());
+                //Se comprueba si el vector nombres tiene solo un elemento
+                if(nombres.length == 1){
+                    ps.setString(3, "");
+                }else{
+                    ps.setString(3, nombres[1]);
+                }
+                //Se comprueba si el vector apellidos tiene solo un elemento
+                if(apellidos.length == 1){
+                    ps.setString(4, "");
+                }else{
+                    ps.setString(4, apellidos[1]);
+                }
+            }
+            //Si la consulta se ejecuta correctamente se agregan los resultados a la tabla
             if(ps.execute()){
                 ResultSet res= ps.executeQuery();
                 while(res.next()){

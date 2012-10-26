@@ -14,7 +14,7 @@ import java.sql.Connection;
 
 /**
  *
- * @author pc
+ * @author SySoft
  */
 public class Medicar extends javax.swing.JFrame {
 
