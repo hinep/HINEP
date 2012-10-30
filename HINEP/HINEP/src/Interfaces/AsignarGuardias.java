@@ -1,14 +1,14 @@
 package Interfaces;
 
+import java.sql.Connection;
+
 
 public class AsignarGuardias extends javax.swing.JFrame {
-
-    javax.swing.JFrame Menu;
     
-    public AsignarGuardias(javax.swing.JFrame menu) {
+    public AsignarGuardias(Connection con) {
         initComponents();
-        
-        Menu=menu;
+        setLocationRelativeTo(null);
+        cn = con;
     }
 
     @SuppressWarnings("unchecked")
@@ -118,13 +118,12 @@ public class AsignarGuardias extends javax.swing.JFrame {
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
         this.setVisible(false);
-        Menu.setVisible(true);
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
-
+    private Connection cn;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private javax.swing.JComboBox jComboBox1;

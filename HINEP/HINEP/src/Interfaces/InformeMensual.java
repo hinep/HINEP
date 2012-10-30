@@ -10,6 +10,8 @@
  */
 package Interfaces;
 
+import java.sql.Connection;
+
 /**
  *
  * @author SySoft
@@ -17,9 +19,10 @@ package Interfaces;
 public class InformeMensual extends javax.swing.JDialog {
 
     /** Creates new form InformeMensual */
-    public InformeMensual(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+    public InformeMensual(Connection con) {
         initComponents();
+        setLocationRelativeTo(null);
+        cn = con;
     }
 
     /** This method is called from within the constructor to
@@ -151,7 +154,8 @@ public class InformeMensual extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_jbGenerarActionPerformed
 
-    
+
+    private Connection cn;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

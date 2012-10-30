@@ -18,10 +18,12 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public Menu(Connection cn, int id) {
+    public Menu(Connection cn, int id, Principal in) {
+        initComponents();
+        setLocationRelativeTo(null);
         conexion = cn;
         id_personal = id;
-        initComponents();
+        inicio = in;
     }
 
     /**
@@ -70,14 +72,14 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        jbGuardias.setText("Asignar Guardias");
+        jbGuardias.setText("Jefe de Guardia");
         jbGuardias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbGuardiasActionPerformed(evt);
             }
         });
 
-        jbEstadisticas.setText("Estadístcias");
+        jbEstadisticas.setText("Info Diara");
         jbEstadisticas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbEstadisticasActionPerformed(evt);
@@ -129,34 +131,36 @@ public class Menu extends javax.swing.JFrame {
 
     private void jbAtenciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtenciónActionPerformed
         try {
-                    SelecciondePaciente atenPaciente = new SelecciondePaciente(this, conexion, id_personal);
-                    atenPaciente.setVisible(true);
-                    this.setVisible(false);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            SelecciondePaciente atenPaciente = new SelecciondePaciente(this, conexion, id_personal);
+            atenPaciente.setVisible(true);
+            this.setVisible(false);
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jbAtenciónActionPerformed
 
     private void jbInternacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInternacionesActionPerformed
         AdministrarInternaciones internacion = new AdministrarInternaciones(this, rootPaneCheckingEnabled, conexion);
-                internacion.setVisible(true);
+        internacion.setVisible(true);
     }//GEN-LAST:event_jbInternacionesActionPerformed
 
     private void jbMedicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMedicarActionPerformed
         Medicar admMedicacion = new Medicar(this, conexion);
-                admMedicacion.setVisible(true);
-                this.setVisible(false);
+        admMedicacion.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jbMedicarActionPerformed
 
     private void jbGuardiasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardiasActionPerformed
-        
+        OpcionesJefeGuardia opJefeGuardia = new OpcionesJefeGuardia(inicio,conexion);
+                opJefeGuardia.setVisible(true);
+                this.setVisible(false);
     }//GEN-LAST:event_jbGuardiasActionPerformed
 
     private void jbEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEstadisticasActionPerformed
-        
     }//GEN-LAST:event_jbEstadisticasActionPerformed
     private Connection conexion;
     private int id_personal;
+    private Principal inicio;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jbAtención;

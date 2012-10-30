@@ -268,7 +268,7 @@ public class Principal extends javax.swing.JFrame {
         switch (permiso) {
             case 0:
                 // Usuario Administrador
-                Menu menu = new Menu(conexion, id_personal);
+                Menu menu = new Menu(conexion, id_personal, this);
                 menu.setVisible(true);
                 this.setVisible(false);
                 break;
@@ -302,11 +302,19 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 5:
                 // Jefe de guardia
+                OpcionesJefeGuardia opJefeGuardia = new OpcionesJefeGuardia(this,conexion);
+                opJefeGuardia.setVisible(true);
+                this.setVisible(false);
                 break;
             case 6:
                 // Jefe de Servicio
                 break;
         }
+    }
+    
+    protected void blanquear() {
+        jtfUsuario.setText("");
+        jtfPass.setText("");
     }
 
     private void noError() {
