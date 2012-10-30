@@ -165,6 +165,11 @@ public class Busqueda extends javax.swing.JFrame {
                 jbBuscarMouseClicked(evt);
             }
         });
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
@@ -465,6 +470,10 @@ public class Busqueda extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jtfApellidoKeyReleased
 
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jbBuscarActionPerformed
+
     private Connection conexion;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup grupodebotones;
@@ -584,32 +593,52 @@ public class Busqueda extends javax.swing.JFrame {
             //Crea vectores con nombres y apelldios
             String[] nombres = jtfNombre.getText().split(" ");
             String[] apellidos = jtfApellido.getText().split(" ");
-            PreparedStatement ps;
+            PreparedStatement ps = null;
             DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
-            //Se comprueba si ambos vectores tiene longitud 1
+            //Se comprueba si los vectores tienen longitud 1
             if(nombres.length == 1 && apellidos.length == 1){
-                ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? or ape_1 like ?");
-                ps.setString(1, nombres[0].toUpperCase());
-                ps.setString(2, apellidos[0].toUpperCase());
+                if(!nombres[0].equals("") && !apellidos[0].equals("")){
+                    ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? and ape_1 like ?");
+                    ps.setString(1, "%"+nombres[0].toUpperCase()+"%");
+                    ps.setString(2, apellidos[0].toUpperCase());
+                }
+                if(!nombres[0].equals("")){
+                    ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ?");
+                    ps.setString(1, "%"+nombres[0].toUpperCase()+"%");
+                }
+                if(!apellidos[0].equals("")){
+                    ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where ape_1 like ?");
+                    ps.setString(1, apellidos[0].toUpperCase());
+                }
             }else{
-                ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? or ape_1 like ? or nom_2 like ? or ape_2 like ?");
-                ps.setString(1, nombres[0].toUpperCase());
-                ps.setString(2, apellidos[0].toUpperCase());
-                //Se comprueba si el vector nombres tiene solo un elemento
-                if(nombres.length == 1){
-                    ps.setString(3, "");
-                }else{
-                    ps.setString(3, nombres[1]);
+                //Se comprueba si los vectores tienen longitud mayor a 1
+                if(nombres.length > 1 && apellidos.length > 1){
+                    if(!nombres[0].equals("") && !apellidos[0].equals("") && !nombres[1].equals("") && !apellidos[1].equals("")){
+                        ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? and ape_1 like ? and nom_2 like ? and ape_2 like ?");
+                        ps.setString(1, "%"+nombres[0].toUpperCase()+"%");
+                        ps.setString(2, apellidos[0].toUpperCase());
+                        ps.setString(3, "%"+nombres[1].toUpperCase()+"%");
+                        ps.setString(4, apellidos[1].toUpperCase());
+                    }
                 }
-                //Se comprueba si el vector apellidos tiene solo un elemento
-                if(apellidos.length == 1){
-                    ps.setString(4, "");
-                }else{
-                    ps.setString(4, apellidos[1]);
-                }
+                    //Se comprueba si el vector nombres tiene más de un elemento
+                    if(nombres.length > 1){
+                        if(!nombres[0].equals("") && !nombres[1].equals("")){
+                            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where nom_1 like ? and nom_2 like ?");
+                            ps.setString(1, "%"+nombres[0].toUpperCase()+"%");
+                            ps.setString(2, "%"+nombres[1].toUpperCase()+"%");
+                        }
+                    }
+                    if(apellidos.length > 1){
+                        if(!apellidos[0].equals("") && !apellidos[1].equals("")){
+                            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from pacientes where ape_1 like ? and ape_2 like ?");
+                            ps.setString(1, apellidos[0].toUpperCase());
+                            ps.setString(2, apellidos[1].toUpperCase());
+                        }
+                    }
             }
-            //Si la consulta se ejecuta correctamente se agregan los resultados a la tabla
-            if(ps.execute()){
+            //Si la consulta no es null se agregan los resultados a la tabla
+            if(!(ps == null)){
                 ResultSet res= ps.executeQuery();
                 while(res.next()){
                     String nombre;
@@ -631,32 +660,52 @@ public class Busqueda extends javax.swing.JFrame {
             //Crea vectores con nombres y apelldios
             String[] nombres = jtfNombre.getText().split(" ");
             String[] apellidos = jtfApellido.getText().split(" ");
-            PreparedStatement ps;
+            PreparedStatement ps = null;
             DefaultTableModel temp = (DefaultTableModel) jtTabla.getModel();
-            //Se comprueba si ambos vectores tiene longitud 1
+            //Se comprueba si los vectores tienen longitud 1
             if(nombres.length == 1 && apellidos.length == 1){
-                ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ? or ape_1 like ?");
-                ps.setString(1, nombres[0].toUpperCase());
-                ps.setString(2, apellidos[0].toUpperCase());
+                if(!nombres[0].equals("") && !apellidos[0].equals("")){
+                    ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ? and ape_1 like ?");
+                    ps.setString(1, "%"+nombres[0].toUpperCase()+"%");
+                    ps.setString(2, apellidos[0].toUpperCase());
+                }
+                if(!nombres[0].equals("")){
+                    ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ?");
+                    ps.setString(1, "%"+nombres[0].toUpperCase()+"%");
+                }
+                if(!apellidos[0].equals("")){
+                    ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where ape_1 like ?");
+                    ps.setString(1, apellidos[0].toUpperCase());
+                }
             }else{
-                ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ? or ape_1 like ? or nom_2 like ? or ape_2 like ?");
-                ps.setString(1, nombres[0].toUpperCase());
-                ps.setString(2, apellidos[0].toUpperCase());
-                //Se comprueba si el vector nombres tiene solo un elemento
-                if(nombres.length == 1){
-                    ps.setString(3, "");
-                }else{
-                    ps.setString(3, nombres[1]);
+                //Se comprueba si los vectores tienen longitud mayor a 1
+                if(nombres.length > 1 && apellidos.length > 1){
+                    if(!nombres[0].equals("") && !apellidos[0].equals("") && !nombres[1].equals("") && !apellidos[1].equals("")){
+                        ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ? and ape_1 like ? and nom_2 like ? and ape_2 like ?");
+                        ps.setString(1, "%"+nombres[0].toUpperCase()+"%");
+                        ps.setString(2, apellidos[0].toUpperCase());
+                        ps.setString(3, "%"+nombres[1].toUpperCase()+"%");
+                        ps.setString(4, apellidos[1].toUpperCase());
+                    }
                 }
-                //Se comprueba si el vector apellidos tiene solo un elemento
-                if(apellidos.length == 1){
-                    ps.setString(4, "");
-                }else{
-                    ps.setString(4, apellidos[1]);
-                }
+                    //Se comprueba si el vector nombres tiene más de un elemento
+                    if(nombres.length > 1){
+                        if(!nombres[0].equals("") && !nombres[1].equals("")){
+                            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where nom_1 like ? and nom_2 like ?");
+                            ps.setString(1, "%"+nombres[0].toUpperCase()+"%");
+                            ps.setString(2, "%"+nombres[1].toUpperCase()+"%");
+                        }
+                    }
+                    if(apellidos.length > 1){
+                        if(!apellidos[0].equals("") && !apellidos[1].equals("")){
+                            ps = conexion.prepareStatement("select nom_1, nom_2, ape_1, ape_2, dni from tutores where ape_1 like ? and ape_2 like ?");
+                            ps.setString(1, apellidos[0].toUpperCase());
+                            ps.setString(2, apellidos[1].toUpperCase());
+                        }
+                    }
             }
-            //Si la consulta se ejecuta correctamente se agregan los resultados a la tabla
-            if(ps.execute()){
+            //Si la consulta no es null se agregan los resultados a la tabla
+            if(!(ps == null)){
                 ResultSet res= ps.executeQuery();
                 while(res.next()){
                     String nombre;
