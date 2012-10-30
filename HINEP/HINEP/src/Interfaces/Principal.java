@@ -219,8 +219,9 @@ public class Principal extends javax.swing.JFrame {
                 rs = st.executeQuery("SELECT * FROM usuarios WHERE usuario = '" + usuario + "' and pass = '" + pass + "'");
                 // Es un usuario existente
                 if (rs.next()) {
-                    // Obtengo la fecha del sistema (hoy)
+                    // Formato de la fecha
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    // Obtengo la fecha del sistema (hoy)
                     Date fechaSistema = new Date();
                     String fecha = sdf.format(fechaSistema);
                     // Obtengo el id_permiso del usuario
