@@ -1,11 +1,14 @@
 package Interfaces;
 
+import java.sql.Connection;
+
 public class InformeDiario extends javax.swing.JDialog {
 
-    
-    public InformeDiario(javax.swing.JFrame parent, boolean modal) {
-        super(parent, modal);
+    public InformeDiario(Principal in, Connection con) {
         initComponents();
+        setLocationRelativeTo(null);
+        inicio = in;
+        cn = con;
     }
 
     @SuppressWarnings("unchecked")
@@ -112,8 +115,8 @@ public class InformeDiario extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    
+    private Principal inicio;
+    private Connection cn;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

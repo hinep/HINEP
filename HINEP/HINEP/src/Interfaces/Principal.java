@@ -217,30 +217,34 @@ public class Principal extends javax.swing.JFrame {
             try {
                 ResultSet rs;
                 rs = st.executeQuery("SELECT * FROM usuarios WHERE usuario = '" + usuario + "' and pass = '" + pass + "'");
+                // Es un usuario existente
                 if (rs.next()) {
+                    // Obtengo la fecha del sistema (hoy)
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                     Date fechaSistema = new Date();
                     String fecha = sdf.format(fechaSistema);
+                    // Obtengo el id_permiso del usuario
                     permiso = rs.getInt(3);
-                    System.out.println(permiso);
+                    // Obtengo el id_personal del usuario
                     id_personal = rs.getInt(2);
                     rs = st.executeQuery("SELECT * FROM guardias WHERE id_personal = '" + id_personal + "' and fecha = '" + fecha + "'");
-                    System.out.println("1");
+                    // Verifico que ese usuario est{e de guardia hoy
                     if (rs.next()) {
-                        System.out.println("2");
+                        // Si est{a de guardia, ingresa
                         ingresar();
                     } else {
-                        System.out.println("3");
                         rs = st.executeQuery("SELECT * FROM guardias WHERE id_personal = '" + id_personal + "' and id_cargo = 9");
                         if (rs.next()) {
-                            System.out.println("4");
+                            // Si es el jefe de guardia, puede ingresar en cualquier momento
                             ingresar();
                         } else {
+                            // Si no, es un usuario en HORARIO NO PERMITIDO
                             jlbError3.setVisible(true);
                         }
                     }
 
                 } else {
+                    // Error en el ingreso de usuario / contraseña
                     jlbError2.setVisible(true);
                 }
             } catch (SQLException ex) {
@@ -270,13 +274,11 @@ public class Principal extends javax.swing.JFrame {
                 // Usuario Administrador
                 Menu menu = new Menu(conexion, id_personal, this);
                 menu.setVisible(true);
-                this.setVisible(false);
                 break;
             case 1:
                 // Usuario del sector de admisión de la guardia
                 Busqueda ingPaciente = new Busqueda(this, conexion);
                 ingPaciente.setVisible(true);
-                this.setVisible(false);
                 break;
             case 2:
                 // Usuario del sector de atención en consultorio
@@ -284,7 +286,6 @@ public class Principal extends javax.swing.JFrame {
                 try {
                     atenPaciente = new SelecciondePaciente(this, conexion, id_personal);
                     atenPaciente.setVisible(true);
-                    this.setVisible(false);
                 } catch (SQLException ex) {
                     Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -293,7 +294,6 @@ public class Principal extends javax.swing.JFrame {
                 // Usuario de enfermería
                 Medicar admMedicacion = new Medicar(this, conexion);
                 admMedicacion.setVisible(true);
-                this.setVisible(false);
                 break;
             case 4:
                 // Usuario de internaciones transitorias de la guardia
@@ -304,12 +304,14 @@ public class Principal extends javax.swing.JFrame {
                 // Jefe de guardia
                 OpcionesJefeGuardia opJefeGuardia = new OpcionesJefeGuardia(this,conexion);
                 opJefeGuardia.setVisible(true);
-                this.setVisible(false);
                 break;
             case 6:
                 // Jefe de Servicio
+                InformeDiario infoDiario = new InformeDiario(this, conexion);
+                infoDiario.setVisible(true);
                 break;
         }
+        this.setVisible(false);
     }
     
     protected void blanquear() {

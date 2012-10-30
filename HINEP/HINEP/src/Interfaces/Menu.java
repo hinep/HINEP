@@ -157,6 +157,9 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jbGuardiasActionPerformed
 
     private void jbEstadisticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEstadisticasActionPerformed
+InformeDiario infoDiario = new InformeDiario(inicio, conexion);
+                infoDiario.setVisible(true);
+                this.setVisible(false);
     }//GEN-LAST:event_jbEstadisticasActionPerformed
     private Connection conexion;
     private int id_personal;
