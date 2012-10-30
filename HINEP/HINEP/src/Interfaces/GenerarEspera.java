@@ -188,7 +188,7 @@ public class GenerarEspera extends javax.swing.JFrame {
             if(i==0){
                 try {
                     Calendar cal = Calendar.getInstance();
-                    String fecha = Integer.toString(cal.get(Calendar.YEAR))+"-"+Integer.toString(cal.get(Calendar.MONTH+1))+"-"+Integer.toString(cal.get(Calendar.DATE));
+                    String fecha = Integer.toString(cal.get(Calendar.YEAR))+"-"+Integer.toString(cal.get(Calendar.MONTH)+1 )+"-"+Integer.toString(cal.get(Calendar.DATE));
                     PreparedStatement ps = conexion.prepareStatement("insert into esperas (id_paciente, fecha, sintomas, nivel_imp, estado) values (?,?,?,?,?)");
                     ps.setInt(1, idPa);
                     ps.setDate(2, Date.valueOf(fecha));
