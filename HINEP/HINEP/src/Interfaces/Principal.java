@@ -234,7 +234,7 @@ public class Principal extends javax.swing.JFrame {
                         // Si est{a de guardia, ingresa
                         ingresar();
                     } else {
-                        rs = st.executeQuery("SELECT * FROM guardias WHERE id_personal = '" + id_personal + "' and id_cargo = 9");
+                        rs = st.executeQuery("SELECT * FROM personal WHERE id_personal = '" + id_personal + "' and id_cargo = 9");
                         if (rs.next()) {
                             // Si es el jefe de guardia, puede ingresar en cualquier momento
                             ingresar();

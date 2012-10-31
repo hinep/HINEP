@@ -153,7 +153,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
     private void rellenarCombo() throws SQLException {
         ResultSet rs;
         DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
-        rs = st.executeQuery("SELECT * FROM cargos");
+        rs = st.executeQuery("SELECT * FROM cargos order by cargo");
         while (rs.next()) {
             modeloCombo.addElement(rs.getString(2));
         }
