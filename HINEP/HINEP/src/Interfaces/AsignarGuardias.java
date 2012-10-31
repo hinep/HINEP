@@ -8,14 +8,13 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 
 public class AsignarGuardias extends javax.swing.JFrame {
 
     public AsignarGuardias(Connection con) {
         initComponents();
-        setLocationRelativeTo(null);
-        // No se podr{an seleccionar fechas anteriores a la actual
-        dateChooserCombo1.setMinDate(Calendar.getInstance());
+
         cn = con;
         try {
             st = cn.createStatement();
@@ -23,6 +22,11 @@ public class AsignarGuardias extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
         }
+        setLocationRelativeTo(null);
+        // No se podr{an seleccionar fechas anteriores a la actual
+        dateChooserCombo1.setMinDate(Calendar.getInstance());
+
+
     }
 
     @SuppressWarnings("unchecked")
@@ -49,6 +53,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
         jLabel2.setText("Cargo a cubrir:");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Médico Consultorio", "Enfermero" }));
+        jComboBox1.setSelectedItem(null);
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
@@ -141,21 +146,19 @@ public class AsignarGuardias extends javax.swing.JFrame {
         // Formato de la fecha
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fecha = sdf.format(fechaSel.getTime());
-
         System.out.println(fecha);
         this.setVisible(false);
     }//GEN-LAST:event_jbGuardarActionPerformed
 
-    private void rellenarCombo() {
+    private void rellenarCombo() throws SQLException {
         ResultSet rs;
-        try {
-            rs = st.executeQuery("SELECT * FROM cargos");
-            while(rs.next()){
-                jComboBox1.addItem(rs.getString(2));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
+        DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
+        rs = st.executeQuery("SELECT * FROM cargos");
+        while (rs.next()) {
+            modeloCombo.addElement(rs.getString(2));
         }
+        jComboBox1.setModel(modeloCombo);
+        rs.close();
     }
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -163,12 +166,12 @@ public class AsignarGuardias extends javax.swing.JFrame {
             // TODO add your handling code here:
             ResultSet rs;
             String itemSelecionado = (String) jComboBox1.getSelectedItem();
-            rs = st.executeQuery("SELECT * FROM cargos WHERE cargo = '" + itemSelecionado+"'");
-            if(rs.next()){
+            rs = st.executeQuery("SELECT * FROM cargos WHERE cargo = '" + itemSelecionado + "'");
+            if (rs.next()) {
                 int id_cargo = rs.getInt(1);
                 //System.out.println(rs.getInt(1));
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
         }
