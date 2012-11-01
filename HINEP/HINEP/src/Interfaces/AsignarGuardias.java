@@ -16,10 +16,13 @@ public class AsignarGuardias extends javax.swing.JFrame {
 
     public AsignarGuardias(Connection con) {
         initComponents();
-        guardia = null;
+        guardia = new Guardia();
         sdf = new SimpleDateFormat("yyyy-MM-dd");
-        jlbAsterisco1.setVisible(false);
-        jlbError1.setVisible(false);
+        error(false);
+        error1(false);
+        jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
+        jTable1.getColumnModel().getColumn(0).setMinWidth(0);
+        jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
         cn = con;
         try {
             st = cn.createStatement();
@@ -46,6 +49,8 @@ public class AsignarGuardias extends javax.swing.JFrame {
         dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
         jlbAsterisco1 = new javax.swing.JLabel();
         jlbError1 = new javax.swing.JLabel();
+        jlbAsterisco2 = new javax.swing.JLabel();
+        jlbError2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -67,17 +72,18 @@ public class AsignarGuardias extends javax.swing.JFrame {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Nombre y Apellido", "Profesión", "Matrícula"
+                "id_personal", "Nombre y Apellido", "Profesión", "Matrícula"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -88,6 +94,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(jTable1);
 
         jbGuardar.setText("Guardar");
@@ -111,6 +118,14 @@ public class AsignarGuardias extends javax.swing.JFrame {
         jlbError1.setForeground(new java.awt.Color(204, 0, 0));
         jlbError1.setText("* Debe seleccionar una fecha");
 
+        jlbAsterisco2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jlbAsterisco2.setForeground(new java.awt.Color(204, 0, 0));
+        jlbAsterisco2.setText("*");
+
+        jlbError2.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jlbError2.setForeground(new java.awt.Color(204, 0, 0));
+        jlbError2.setText("* Debe seleccionar un empleado");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -118,7 +133,6 @@ public class AsignarGuardias extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -132,7 +146,15 @@ public class AsignarGuardias extends javax.swing.JFrame {
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jlbError2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlbAsterisco2, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(108, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -148,10 +170,17 @@ public class AsignarGuardias extends javax.swing.JFrame {
                     .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(jlbError1)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jlbAsterisco2)))
                 .addGap(26, 26, 26)
-                .addComponent(jbGuardar)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jbGuardar)
+                    .addComponent(jlbError2))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
 
@@ -159,9 +188,10 @@ public class AsignarGuardias extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,9 +202,48 @@ public class AsignarGuardias extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
+        /*ResultSet rs;
+        if (fecha == null) {
+            error(true);
+        }
+        else {
+            if (jTable1.getSelectedRow() == -1) {
+                System.out.println(jTable1.getSelectedRow());
+                error1(true);
+            } else {
+                try {
+                    rs = st.executeQuery("SELECT COUNT(*) FROM personal JOIN guardias ON personal.id_personal = guardias.id_personal WHERE personal.id_cargo = " + id_cargo + " AND guardias.fecha = '" + guardia.getFecha() + "'");
+                    if (rs.next()) {
+                        if (id_cargo == 11 || id_cargo == 17) {
+                            System.out.println(id_cargo + rs.getInt(1));
+                            if (rs.getInt(1) == 3) {
+                                javax.swing.JOptionPane.showMessageDialog(null, "Esa guardia ya fue asignada 11 / 17");
+                            }
+                        } else {
+                            javax.swing.JOptionPane.showMessageDialog(null, "Esa guardia ya fue asignada");
+                        }
+                    } else {
+                    }
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
 
 
-        this.setVisible(false);
+
+            /*
+             System.out.println("Id CArgo = " + id_cargo);
+             else {
+             System.out.println(jTable1.getSelectedRow());
+             this.setVisible(false);
+             }
+            
+             */
+
+
+     //   }
+
     }//GEN-LAST:event_jbGuardarActionPerformed
 
     private void rellenarCombo() throws SQLException {
@@ -190,33 +259,31 @@ public class AsignarGuardias extends javax.swing.JFrame {
 
     private void cambioSeleccion() {
         ResultSet rs;
-        int id_cargo = 0;
-
         DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
         while (modelo.getRowCount() - 1 >= 0) {
             modelo.removeRow(0);
         }
-
         System.out.println(fecha);
         try {
             String itemSelecionado = (String) jComboBox1.getSelectedItem();
             rs = st.executeQuery("SELECT * FROM cargos WHERE cargo = '" + itemSelecionado + "'");
             if (rs.next()) {
                 id_cargo = rs.getInt(1);
-                //System.out.println(rs.getInt(1));
             }
-            rs = st.executeQuery("SELECT * FROM personal JOIN guardias ON personal.id_personal = guardias.id_personal WHERE personal.id_cargo = " + id_cargo + " AND guardias.fecha < '" + fecha + "'");
-
+            rs = st.executeQuery("SELECT distinct personal.id_personal, personal.nombre, personal.apellido, personal.matricula, personal.profesion FROM personal JOIN guardias ON personal.id_personal = guardias.id_personal WHERE personal.id_cargo = " + id_cargo + " AND personal.id_personal NOT IN (SELECT id_personal FROM guardias WHERE guardias.fecha < '" + guardia.getFecha() + "' AND guardias.fecha > '" + fecha + "')");
+            System.out.println(guardia.getFecha());
             while (rs.next()) {
                 String nombre;
                 String profesion;
                 String matricula;
+                int id;
+                id = rs.getInt("id_personal");
                 nombre = rs.getString("nombre") + " " + rs.getString("apellido");
                 profesion = rs.getString("profesion");
                 matricula = rs.getString("matricula");
-                Object o[] = {nombre, profesion, matricula};
+                Object o[] = {id, nombre, profesion, matricula};
                 modelo.addRow(o);
-                //System.out.println(rs.getInt(1));
+                System.out.println(id);
             }
 
 
@@ -227,38 +294,37 @@ public class AsignarGuardias extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if (fecha == null) {
-            jlbAsterisco1.setVisible(true);
-            jlbError1.setVisible(true);
+            error(true);
         } else {
             cambioSeleccion();
         }
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jDataChooserActionPerformed(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_jDataChooserActionPerformed
-        noError();
+        error(false);
         Calendar fechaSel;
         //fechaSeleccionada();
         // obtengo la fecha seleccionada
         fechaSel = dateChooserCombo1.getSelectedDate();
+        guardia.setFecha(sdf.format(fechaSel.getTime()));
         // le resto dos dias, el personal asignado a guardia
         // debe tener por lo menos dos dias de descanso
-        fechaSel.add(Calendar.DAY_OF_YEAR, -2);
+        fechaSel.add(Calendar.DAY_OF_YEAR, -3);
         fecha = sdf.format(fechaSel.getTime());
         cambioSeleccion();
         // TODO add your handling code here:
     }//GEN-LAST:event_jDataChooserActionPerformed
 
-    private void noError() {
-        jlbAsterisco1.setVisible(false);
-        jlbError1.setVisible(false);
+    private void error(boolean er) {
+        jlbAsterisco1.setVisible(er);
+        jlbError1.setVisible(er);
     }
 
-    private void fechaSeleccionada() {
-        // Obtengo la fecha seleccionada
-        //Calendar fechaSel = dateChooserCombo1.getSelectedDate();
-        // Formato de la fecha
-        //guardia.setFecha(sdf.format(fechaSel.getTime()));
+    private void error1(boolean er) {
+        jlbAsterisco2.setVisible(er);
+        jlbError2.setVisible(er);
     }
+    private int id_cargo;
     private String fecha;
     SimpleDateFormat sdf;
     private Guardia guardia;
@@ -274,6 +340,8 @@ public class AsignarGuardias extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbGuardar;
     private javax.swing.JLabel jlbAsterisco1;
+    private javax.swing.JLabel jlbAsterisco2;
     private javax.swing.JLabel jlbError1;
+    private javax.swing.JLabel jlbError2;
     // End of variables declaration//GEN-END:variables
 }
