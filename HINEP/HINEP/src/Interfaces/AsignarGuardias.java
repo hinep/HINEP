@@ -1,5 +1,6 @@
 package Interfaces;
 
+import Engine.Guardia;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,12 +10,16 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 public class AsignarGuardias extends javax.swing.JFrame {
 
     public AsignarGuardias(Connection con) {
         initComponents();
-
+        guardia = null;
+        sdf = new SimpleDateFormat("yyyy-MM-dd");
+        jlbAsterisco1.setVisible(false);
+        jlbError1.setVisible(false);
         cn = con;
         try {
             st = cn.createStatement();
@@ -25,8 +30,6 @@ public class AsignarGuardias extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         // No se podr{an seleccionar fechas anteriores a la actual
         dateChooserCombo1.setMinDate(Calendar.getInstance());
-
-
     }
 
     @SuppressWarnings("unchecked")
@@ -41,6 +44,8 @@ public class AsignarGuardias extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jbGuardar = new javax.swing.JButton();
         dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
+        jlbAsterisco1 = new javax.swing.JLabel();
+        jlbError1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,15 +70,22 @@ public class AsignarGuardias extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nombre y Apellido", "Profesión", "Matrícula", "Cargo a cubrir", "Fecha de Guardia"
+                "Nombre y Apellido", "Profesión", "Matrícula"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -85,6 +97,20 @@ public class AsignarGuardias extends javax.swing.JFrame {
             }
         });
 
+        dateChooserCombo1.addSelectionChangedListener(new datechooser.events.SelectionChangedListener() {
+            public void onSelectionChange(datechooser.events.SelectionChangedEvent evt) {
+                jDataChooserActionPerformed(evt);
+            }
+        });
+
+        jlbAsterisco1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jlbAsterisco1.setForeground(new java.awt.Color(204, 0, 0));
+        jlbAsterisco1.setText("*");
+
+        jlbError1.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
+        jlbError1.setForeground(new java.awt.Color(204, 0, 0));
+        jlbError1.setText("* Debe seleccionar una fecha");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -94,18 +120,20 @@ public class AsignarGuardias extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jlbError1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlbAsterisco1, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(53, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(108, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,38 +143,37 @@ public class AsignarGuardias extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jComboBox1))
+                        .addComponent(jComboBox1)
+                        .addComponent(jlbAsterisco1))
                     .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(jlbError1)
                 .addGap(18, 18, 18)
-                .addComponent(jbGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(22, 22, 22))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jbGuardar)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        // Obtengo la fecha seleccionada
-        Calendar fechaSel = dateChooserCombo1.getSelectedDate();
-        // Formato de la fecha
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String fecha = sdf.format(fechaSel.getTime());
-        System.out.println(fecha);
+
+
         this.setVisible(false);
     }//GEN-LAST:event_jbGuardarActionPerformed
 
@@ -161,21 +188,80 @@ public class AsignarGuardias extends javax.swing.JFrame {
         rs.close();
     }
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void cambioSeleccion() {
+        ResultSet rs;
+        int id_cargo = 0;
+
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        while (modelo.getRowCount() - 1 >= 0) {
+            modelo.removeRow(0);
+        }
+
+        System.out.println(fecha);
         try {
-            // TODO add your handling code here:
-            ResultSet rs;
             String itemSelecionado = (String) jComboBox1.getSelectedItem();
             rs = st.executeQuery("SELECT * FROM cargos WHERE cargo = '" + itemSelecionado + "'");
             if (rs.next()) {
-                int id_cargo = rs.getInt(1);
+                id_cargo = rs.getInt(1);
                 //System.out.println(rs.getInt(1));
             }
+            rs = st.executeQuery("SELECT * FROM personal JOIN guardias ON personal.id_personal = guardias.id_personal WHERE personal.id_cargo = " + id_cargo + " AND guardias.fecha < '" + fecha + "'");
+
+            while (rs.next()) {
+                String nombre;
+                String profesion;
+                String matricula;
+                nombre = rs.getString("nombre") + " " + rs.getString("apellido");
+                profesion = rs.getString("profesion");
+                matricula = rs.getString("matricula");
+                Object o[] = {nombre, profesion, matricula};
+                modelo.addRow(o);
+                //System.out.println(rs.getInt(1));
+            }
+
 
         } catch (SQLException ex) {
             Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        if (fecha == null) {
+            jlbAsterisco1.setVisible(true);
+            jlbError1.setVisible(true);
+        } else {
+            cambioSeleccion();
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jDataChooserActionPerformed(datechooser.events.SelectionChangedEvent evt) {//GEN-FIRST:event_jDataChooserActionPerformed
+        noError();
+        Calendar fechaSel;
+        //fechaSeleccionada();
+        // obtengo la fecha seleccionada
+        fechaSel = dateChooserCombo1.getSelectedDate();
+        // le resto dos dias, el personal asignado a guardia
+        // debe tener por lo menos dos dias de descanso
+        fechaSel.add(Calendar.DAY_OF_YEAR, -2);
+        fecha = sdf.format(fechaSel.getTime());
+        cambioSeleccion();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jDataChooserActionPerformed
+
+    private void noError() {
+        jlbAsterisco1.setVisible(false);
+        jlbError1.setVisible(false);
+    }
+
+    private void fechaSeleccionada() {
+        // Obtengo la fecha seleccionada
+        //Calendar fechaSel = dateChooserCombo1.getSelectedDate();
+        // Formato de la fecha
+        //guardia.setFecha(sdf.format(fechaSel.getTime()));
+    }
+    private String fecha;
+    SimpleDateFormat sdf;
+    private Guardia guardia;
     private Connection cn;
     private Statement st;
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -187,5 +273,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JButton jbGuardar;
+    private javax.swing.JLabel jlbAsterisco1;
+    private javax.swing.JLabel jlbError1;
     // End of variables declaration//GEN-END:variables
 }
