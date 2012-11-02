@@ -1,15 +1,21 @@
 package Engine;
 
+import Interfaces.AsignarGuardias;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author SySoft
  */
 public class Guardia {
+
     private int idGuardia;
     private String fecha;
 
@@ -28,13 +34,17 @@ public class Guardia {
     public void setIdGuardia(int idGuardia) {
         this.idGuardia = idGuardia;
     }
-    
-    private void guardar(){
+
+    public void guardar(Statement st, int id_personal) {
+        try {
+            st.execute("INSERT INTO guardias(id_personal, fecha)VALUES ( " + id_personal + " , '" + fecha + "')");
+        } catch (SQLException ex) {
+            Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-    
-    private int consultarId(){
+
+    private int consultarId() {
         return 0;
     }
-    
-    
 }

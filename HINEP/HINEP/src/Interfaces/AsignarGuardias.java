@@ -20,6 +20,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
         sdf = new SimpleDateFormat("yyyy-MM-dd");
         error(false);
         error1(false);
+        // Columna invisible enel jtable para guardar el id del personal
         jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
         jTable1.getColumnModel().getColumn(0).setMinWidth(0);
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -51,6 +52,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
         jlbError1 = new javax.swing.JLabel();
         jlbAsterisco2 = new javax.swing.JLabel();
         jlbError2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -126,6 +128,13 @@ public class AsignarGuardias extends javax.swing.JFrame {
         jlbError2.setForeground(new java.awt.Color(204, 0, 0));
         jlbError2.setText("* Debe seleccionar un empleado");
 
+        jButton1.setText("Cancelar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -151,6 +160,8 @@ public class AsignarGuardias extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jlbError2, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1)
+                                .addGap(18, 18, 18)
                                 .addComponent(jbGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 439, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -179,7 +190,9 @@ public class AsignarGuardias extends javax.swing.JFrame {
                         .addComponent(jlbAsterisco2)))
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jbGuardar)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jbGuardar)
+                        .addComponent(jButton1))
                     .addComponent(jlbError2))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
@@ -202,54 +215,59 @@ public class AsignarGuardias extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGuardarActionPerformed
-        /*ResultSet rs;
+        ResultSet rs;
+        error1(false);
+        // Si no eligió fecha
         if (fecha == null) {
             error(true);
-        }
-        else {
-            if (jTable1.getSelectedRow() == -1) {
-                System.out.println(jTable1.getSelectedRow());
-                error1(true);
-            } else {
-                try {
-                    rs = st.executeQuery("SELECT COUNT(*) FROM personal JOIN guardias ON personal.id_personal = guardias.id_personal WHERE personal.id_cargo = " + id_cargo + " AND guardias.fecha = '" + guardia.getFecha() + "'");
-                    if (rs.next()) {
-                        if (id_cargo == 11 || id_cargo == 17) {
-                            System.out.println(id_cargo + rs.getInt(1));
-                            if (rs.getInt(1) == 3) {
-                                javax.swing.JOptionPane.showMessageDialog(null, "Esa guardia ya fue asignada 11 / 17");
-                            }
+        } else {
+            try {
+                rs = st.executeQuery("SELECT COUNT(*) FROM personal JOIN guardias ON personal.id_personal = guardias.id_personal WHERE personal.id_cargo = " + id_cargo + " AND guardias.fecha = '" + guardia.getFecha() + "'");
+                if (rs.next()) {
+                    int contar = rs.getInt("count");
+                    if (contar > 0) {
+
+                        if ((id_cargo == 11 || id_cargo == 17) && contar < 3) {
+                            // Falta asignar guardia para Enfermería o Consultorio
+                            insert();
                         } else {
-                            javax.swing.JOptionPane.showMessageDialog(null, "Esa guardia ya fue asignada");
+                            if (id_cargo == 12 && contar < 2) {
+                                // Falta asignar guardia para internación
+                                insert();
+                            } else {
+                                // Si ya fué asignada la guardia para esa fecha en ese cargo
+                                javax.swing.JOptionPane.showMessageDialog(null, "Ya se asignó personal para esa guardia", "Error al ingresar guardias", 0);
+                                jComboBox1.setSelectedIndex(0);
+                            }
                         }
                     } else {
+                        // Agrega la guardia
+                        insert();
                     }
-
-                } catch (SQLException ex) {
-                    Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } catch (SQLException ex) {
+                Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-
-
-            /*
-             System.out.println("Id CArgo = " + id_cargo);
-             else {
-             System.out.println(jTable1.getSelectedRow());
-             this.setVisible(false);
-             }
-            
-             */
-
-
-     //   }
-
+        }
     }//GEN-LAST:event_jbGuardarActionPerformed
+
+    private void insert() {
+        int fila = jTable1.getSelectedRow();
+        
+        if (fila == -1) {
+            error1(true);
+        } else {
+            int id_personal = (Integer) jTable1.getValueAt(fila, 0);
+                    guardia.guardar(st, id_personal);
+            javax.swing.JOptionPane.showMessageDialog(null, "Operación realizada con exito", "Asignación de guardia", 0);
+            this.dispose();
+        }
+    }
 
     private void rellenarCombo() throws SQLException {
         ResultSet rs;
         DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
-        rs = st.executeQuery("SELECT * FROM cargos order by cargo");
+        rs = st.executeQuery("SELECT * FROM cargos WHERE id_cargo <> 9 order by cargo ");
         while (rs.next()) {
             modeloCombo.addElement(rs.getString(2));
         }
@@ -270,7 +288,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
             if (rs.next()) {
                 id_cargo = rs.getInt(1);
             }
-            rs = st.executeQuery("SELECT distinct personal.id_personal, personal.nombre, personal.apellido, personal.matricula, personal.profesion FROM personal JOIN guardias ON personal.id_personal = guardias.id_personal WHERE personal.id_cargo = " + id_cargo + " AND personal.id_personal NOT IN (SELECT id_personal FROM guardias WHERE guardias.fecha < '" + guardia.getFecha() + "' AND guardias.fecha > '" + fecha + "')");
+            rs = st.executeQuery("SELECT distinct personal.id_personal, personal.nombre, personal.apellido, personal.matricula, personal.profesion FROM personal JOIN guardias ON personal.id_personal = guardias.id_personal WHERE personal.id_cargo = " + id_cargo + " AND personal.id_personal NOT IN (SELECT id_personal FROM guardias WHERE guardias.fecha <= '" + guardia.getFecha() + "' AND guardias.fecha > '" + fecha + "')");
             System.out.println(guardia.getFecha());
             while (rs.next()) {
                 String nombre;
@@ -294,6 +312,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         if (fecha == null) {
+            // Si no ingresó fecha
             error(true);
         } else {
             cambioSeleccion();
@@ -315,6 +334,15 @@ public class AsignarGuardias extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jDataChooserActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int valor;
+        valor = javax.swing.JOptionPane.showConfirmDialog(null, "¿Desea cancelar esta operación?", "Cancelar asignasión de guardias", 0);
+        if (valor == 0) {
+            this.dispose();
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     private void error(boolean er) {
         jlbAsterisco1.setVisible(er);
         jlbError1.setVisible(er);
@@ -332,6 +360,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
     private Statement st;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private datechooser.beans.DateChooserCombo dateChooserCombo1;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
