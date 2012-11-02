@@ -1,5 +1,7 @@
 package Interfaces;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -38,6 +40,7 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         noError();
         iniciarConBD();
+        jbIniciar.addKeyListener(new PresionarTecla());
     }
 
     @SuppressWarnings("unchecked")
@@ -267,7 +270,7 @@ public class Principal extends javax.swing.JFrame {
         conexion = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/hinep", "postgres", "admin");
         st = conexion.createStatement();
     }
-   
+
     private void ingresar() {
         // Según el permiso de usuario, podrá acceder al sector correspondiente
         switch (permiso) {
@@ -303,7 +306,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 5:
                 // Jefe de guardia
-                OpcionesJefeGuardia opJefeGuardia = new OpcionesJefeGuardia(this,conexion);
+                OpcionesJefeGuardia opJefeGuardia = new OpcionesJefeGuardia(this, conexion);
                 opJefeGuardia.setVisible(true);
                 break;
             case 6:
@@ -314,7 +317,7 @@ public class Principal extends javax.swing.JFrame {
         }
         this.setVisible(false);
     }
-    
+
     protected void blanquear() {
         jtfUsuario.setText("");
         jtfPass.setText("");
@@ -369,6 +372,16 @@ public class Principal extends javax.swing.JFrame {
 
             }
         });
+    }
+
+    public class PresionarTecla extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent ke) {
+            if (ke.getKeyCode() == KeyEvent.VK_ENTER) {
+                jbIniciarActionPerformed(null);
+            }
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
