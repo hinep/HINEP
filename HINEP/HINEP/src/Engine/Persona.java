@@ -125,7 +125,7 @@ public abstract class Persona {
         Calendar today = new GregorianCalendar();
         int age=0;
         int factor=0;
-        Date birthDate=new SimpleDateFormat("dd-MM-yyyy").parse(datetext);
+        Date birthDate=new SimpleDateFormat(datetext).parse(datetext);
         Date currentDate=new Date(); //current date
         birth.setTime(birthDate);
         today.setTime(currentDate);
@@ -138,7 +138,7 @@ public abstract class Persona {
                 factor = -1; //Aun no celebra su cumpleaÃ±os
             }
         }
-        age=(today.get(Calendar.YEAR)-birth.get(Calendar.YEAR))+factor;
+        age = (today.get(Calendar.YEAR)-birth.get(Calendar.YEAR))+factor;
         return age;
         } catch (ParseException e) {
         return -1;

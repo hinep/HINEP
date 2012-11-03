@@ -296,7 +296,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 3:
                 // Usuario de enfermería
-                Medicar admMedicacion = new Medicar(this, conexion);
+                Medicar admMedicacion = new Medicar(this, conexion, id_personal);
                 admMedicacion.setVisible(true);
                 break;
             case 4:

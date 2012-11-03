@@ -145,7 +145,8 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jbInternacionesActionPerformed
 
     private void jbMedicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbMedicarActionPerformed
-        Medicar admMedicacion = new Medicar(this, conexion);
+        Medicar admMedicacion;
+        admMedicacion = new Medicar(this, conexion, id_personal);
         admMedicacion.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jbMedicarActionPerformed
