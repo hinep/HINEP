@@ -119,31 +119,30 @@ public abstract class Persona {
     abstract void modificar();
     
     public int calcularEdad() {
-        String datetext = fechaNac;
-        try {
-        Calendar birth = new GregorianCalendar();
-        Calendar today = new GregorianCalendar();
-        int age=0;
-        int factor=0;
-        Date birthDate=new SimpleDateFormat(datetext).parse(datetext);
-        Date currentDate=new Date(); //current date
-        birth.setTime(birthDate);
-        today.setTime(currentDate);
-        if (today.get(Calendar.MONTH) <= birth.get(Calendar.MONTH)) {
-            if (today.get(Calendar.MONTH) == birth.get(Calendar.MONTH)) {
-                if (today.get(Calendar.DATE) > birth.get(Calendar.DATE)) {
-                    factor = -1; //Aun no celebra su cumpleaÃ±os
-                }
-            } else {
-                factor = -1; //Aun no celebra su cumpleaÃ±os
-            }
-        }
-        age = (today.get(Calendar.YEAR)-birth.get(Calendar.YEAR))+factor;
-        return age;
-        } catch (ParseException e) {
-        return -1;
-        }
-
+        Date fechaNaci=null;
+	        try {
+	            /*Se puede cambiar la mascara por el formato de la fecha que se
+	            //quiera recibir, por ejemplo año mes día "yyyy-MM-dd"
+	            en este caso es día mes año*/
+	            fechaNaci = new SimpleDateFormat("yyyy-MM-dd").parse(fechaNac);
+	        } catch (Exception ex) {
+	            System.out.println("Error:"+ex);
+	        }
+	        Calendar fechaNacimiento = Calendar.getInstance();
+                //Se crea un objeto con la fecha actual
+	        Calendar fechaActual = Calendar.getInstance();
+	        //Se asigna la fecha recibida a la fecha de nacimiento.
+	        fechaNacimiento.setTime(fechaNaci);
+	        //Se restan la fecha actual y la fecha de nacimiento
+	        int año = fechaActual.get(Calendar.YEAR)- fechaNacimiento.get(Calendar.YEAR);
+	        int mes =fechaActual.get(Calendar.MONTH)- fechaNacimiento.get(Calendar.MONTH);
+	        int dia = fechaActual.get(Calendar.DATE)- fechaNacimiento.get(Calendar.DATE);
+	        //Se ajusta el año dependiendo el mes y el día
+	        if(mes<0 || (mes==0 && dia<0)){
+	            año--;
+	        }
+	        //Regresa la edad en base a la fecha de nacimiento
+	        return año;
     }
     
 }
