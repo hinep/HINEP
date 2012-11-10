@@ -89,7 +89,7 @@ public class Atencion extends javax.swing.JFrame {
                 pos++;
                 controlespera=1;
         }
-        
+            
         if(controlespera==0){
             JOptionPane.showMessageDialog(rootPane, "Este paciente no tiene diagnosticos previos");
         }
