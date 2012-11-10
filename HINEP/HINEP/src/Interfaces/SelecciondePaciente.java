@@ -244,7 +244,7 @@ public class SelecciondePaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_jbAtrasActionPerformed
 
     private void jbAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtenderActionPerformed
-        
+        String[] nivelimportancia = {"ALTA","MEDIA","BAJA"};
         if(tabla.getSelectedRow()+1>0)
         {
             int[] j = tabla.getSelectedRows();
@@ -253,19 +253,33 @@ public class SelecciondePaciente extends javax.swing.JFrame {
                 int pos = tabla.getSelectedRow();
                 nombre = (String)tabla.getValueAt(pos, 0);
                 try {
+                int palabra=0,controlentrada=0,cont=0;
+                while(palabra<3){
+                    ps = con.prepareStatement("select * from esperas where estado='No Atendido' and nivel_imp='"+nivelimportancia[palabra]+"'");
                     res = ps.executeQuery();
                     res.next();
-                    int cont=0;
-                    while(cont!=pos)
-                    {
-                        res.next();
-                        cont++;
+                    while(res.next()){
+                        if(cont!=pos){
+                            
+                            cont++;
+                            }
+                        }
+                    palabra++;
+                    if(cont==pos){
+                        if(controlentrada!=1){
+                            System.out.println(cont+" "+pos);
+                            int id_espera = res.getInt(1);
+                            controlentrada=1;
+                        }
                     }
+                    
+                    
+                }
                 
-                int id_espera = res.getInt("id_esperas");
                 Atencion at= new Atencion(Menu,this,con,id_espera,id_personal);
                 at.setVisible(true);
                 this.setVisible(false);
+                
                 } catch (SQLException ex) {
                     Logger.getLogger(SelecciondePaciente.class.getName()).log(Level.SEVERE, null, ex);
                 }
