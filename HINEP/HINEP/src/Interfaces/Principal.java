@@ -265,7 +265,6 @@ public class Principal extends javax.swing.JFrame {
                 Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-
         }
 
     }//GEN-LAST:event_jbIniciarActionPerformed
@@ -311,7 +310,7 @@ public class Principal extends javax.swing.JFrame {
                 break;
             case 4:
                 // Usuario de internaciones transitorias de la guardia
-                AdministrarInternaciones internacion = new AdministrarInternaciones(this, conexion);
+                AdministrarInternaciones internacion = new AdministrarInternaciones(this, conexion, id_personal);
                 internacion.setVisible(true);
                 break;
             case 5:

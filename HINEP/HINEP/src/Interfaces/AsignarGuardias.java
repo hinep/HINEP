@@ -285,7 +285,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
         while (modelo.getRowCount() - 1 >= 0) {
             modelo.removeRow(0);
         }
-        System.out.println(fecha);
+        //System.out.println(fecha);
         try {
             String itemSelecionado = (String) jComboBox1.getSelectedItem();
             rs = st.executeQuery("SELECT * FROM cargos WHERE cargo = '" + itemSelecionado + "'");
