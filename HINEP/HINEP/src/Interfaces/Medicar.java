@@ -432,7 +432,6 @@ public class Medicar extends javax.swing.JFrame {
             horaMin = (hora+":"+minutos);
             dosis = "";
             
-            
             DefaultTableModel temp = (DefaultTableModel) jTable1.getModel();
             Object o[] = {remedio,tipo,indicacion,horaMin,dosis};
             temp.addRow(o);  

@@ -1,13 +1,29 @@
 package Interfaces;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 public class TiempoInternacion extends javax.swing.JDialog {
 
-    
-    public TiempoInternacion(javax.swing.JDialog parent, boolean modal) {
-        super(parent, modal);
+    public TiempoInternacion(AdministrarInternaciones ai, Connection con) {
         initComponents();
+        cn = con;
+        adminInter = ai;
+        try {
+            st = cn.createStatement();
+            rellenarTabla();
+        } catch (SQLException ex) {
+            Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -26,15 +42,22 @@ public class TiempoInternacion extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Tiempo de Internación", "Nombre", "Apellido", "Fecha de Ingreso"
+                "Tiempo (Horas)", "Habitación - Cama", "Nombre y Apellido", "Fecha de Ingreso"
             }
         ) {
             Class[] types = new Class [] {
                 java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
             }
         });
         jScrollPane1.setViewportView(jTable1);
@@ -53,20 +76,20 @@ public class TiempoInternacion extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 477, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(307, 307, 307)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 23, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jButton1)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -77,16 +100,64 @@ public class TiempoInternacion extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.setVisible(false);
+        this.dispose();
+        adminInter.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void rellenarTabla() {
+        ResultSet rs;
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        // Para vaciar la tabla
+        while (modelo.getRowCount() - 1 >= 0) {
+            modelo.removeRow(0);
+        }
+        try {
+            rs = st.executeQuery("SELECT (current_date - internaciones_transitorias.fecha_ing) as dif_fecha, (localtime - internaciones_transitorias.hora_ing) as dif_hora,camas.nro_habitacion, camas.desc_cama, pacientes.nom_1, pacientes.ape_1, internaciones_transitorias.fecha_ing FROM internaciones_transitorias join camas on internaciones_transitorias.id_cama = camas.id_cama join pacientes on internaciones_transitorias.id_paciente = pacientes.id_paciente where internaciones_transitorias.fecha_alta is null");
+            while (rs.next()) {
+                String nombre, dif_hora, habitacion, fecha_ing;
+                int dif_fecha, tiempo;
+                dif_fecha = rs.getInt("dif_fecha");
+                dif_hora = rs.getString("dif_hora");
+                fecha_ing = rs.getString("fecha_ing");
+                habitacion = rs.getString("nro_habitacion") + " " + rs.getString("desc_cama");
+                nombre = rs.getString("ape_1") + " " + rs.getString("nom_1");
+                tiempo = tiempoInternacion(dif_fecha, dif_hora);
+                Object o[] = {tiempo, habitacion, nombre, fecha_ing};
+                modelo.addRow(o);
+                //System.out.println();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private int tiempoInternacion(int dif_fecha, String dif_hora) {
+        int indice, tiempo, diasEnHoras = 0;
+        System.out.println(dif_hora);
+        indice = dif_hora.indexOf(":");
+        dif_hora = dif_hora.substring(0, indice);
+        System.out.println(dif_hora);
+        tiempo = Integer.parseInt(dif_hora);
+
+        if (dif_fecha > 0) {
+            // expreso los días en horas
+            diasEnHoras = dif_fecha * 24;
+        }
+        tiempo = tiempo + diasEnHoras;
+        return tiempo;
+    }
+    private AdministrarInternaciones adminInter;
+    private Statement st;
+    private Connection cn;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;

@@ -20,7 +20,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
         sdf = new SimpleDateFormat("yyyy-MM-dd");
         error(false);
         error1(false);
-        // Columna invisible enel jtable para guardar el id del personal
+        // Columna invisible en el jtable para guardar el id del personal
         jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
         jTable1.getColumnModel().getColumn(0).setMinWidth(0);
         jTable1.getColumnModel().getColumn(0).setPreferredWidth(0);
@@ -32,7 +32,8 @@ public class AsignarGuardias extends javax.swing.JFrame {
             Logger.getLogger(AsignarGuardias.class.getName()).log(Level.SEVERE, null, ex);
         }
         setLocationRelativeTo(null);
-        // No se podr{an seleccionar fechas anteriores a la actual
+        setResizable(false);
+        // No se podrán seleccionar fechas anteriores a la actual
         dateChooserCombo1.setMinDate(Calendar.getInstance());
     }
 
@@ -292,7 +293,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
                 id_cargo = rs.getInt(1);
             }
             rs = st.executeQuery("SELECT distinct personal.id_personal, personal.nombre, personal.apellido, personal.matricula, personal.profesion FROM personal JOIN guardias ON personal.id_personal = guardias.id_personal WHERE personal.id_cargo = " + id_cargo + " AND personal.id_personal NOT IN (SELECT id_personal FROM guardias WHERE guardias.fecha <= '" + guardia.getFecha() + "' AND guardias.fecha > '" + fecha + "')");
-            System.out.println(guardia.getFecha());
+            //System.out.println(guardia.getFecha());
             while (rs.next()) {
                 String nombre;
                 String profesion;
@@ -304,7 +305,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
                 matricula = rs.getString("matricula");
                 Object o[] = {id, nombre, profesion, matricula};
                 modelo.addRow(o);
-                System.out.println(id);
+                //System.out.println(id);
             }
 
 
@@ -357,7 +358,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
     }
     private int id_cargo;
     private String fecha;
-    SimpleDateFormat sdf;
+    private SimpleDateFormat sdf;
     private Guardia guardia;
     private Connection cn;
     private Statement st;

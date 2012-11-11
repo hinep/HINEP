@@ -140,7 +140,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jbAtenciónActionPerformed
 
     private void jbInternacionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInternacionesActionPerformed
-        AdministrarInternaciones internacion = new AdministrarInternaciones(this, rootPaneCheckingEnabled, conexion);
+        AdministrarInternaciones internacion = new AdministrarInternaciones(inicio, conexion);
         internacion.setVisible(true);
     }//GEN-LAST:event_jbInternacionesActionPerformed
 

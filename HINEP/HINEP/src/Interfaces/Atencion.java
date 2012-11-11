@@ -76,9 +76,11 @@ public class Atencion extends javax.swing.JFrame {
         while(res3.next())
         {
                 Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
-                for(int i=0;i<tabla.getColumnCount();i++)
-                for(int j=0;j<tabla.getRowCount();j++)
-                   m[j][i]=tabla.getValueAt(j, i);
+                for(int i=0;i<tabla.getColumnCount();i++) {
+                for(int j=0;j<tabla.getRowCount();j++) {
+                        m[j][i]=tabla.getValueAt(j, i);
+                    }
+            }
                 tabla.setModel(new DefaultTableModel(m,new String[]{"FECHA", "DIAGNOSTICO","PATOLOGÍA","TALLA","PESO"}));
 
                 m[pos][0] = res3.getString("fecha");
@@ -449,17 +451,20 @@ public class Atencion extends javax.swing.JFrame {
                 SimpleDateFormat[] fhd = {new SimpleDateFormat("hh:mm")};
                 Date hora = new Date();
                 hora.getTime();
-                for(SimpleDateFormat fhd2 : fhd)
-                System.out.println(fhd2.format(hora));
+                for(SimpleDateFormat fhd2 : fhd) {
+                    System.out.println(fhd2.format(hora));
+                }
                 
                 
                 
                int conf = JOptionPane.showConfirmDialog(rootPane, "¿Esta seguro que desea terminar este diagnostico?", "Confirmación", 2);
                if(conf==0){
                    
-                    for(SimpleDateFormat sdf : sdfs)
-                    for(SimpleDateFormat fhd2 : fhd)
-                    po = con.prepareStatement("insert into historias_clinicas(id_historia, id_personal, id_paciente, fecha, hora, peso, talla, diagnostico, patologia) values (?, ?, ?, '"+sdf.format(d)+"', '"+fhd2.format(hora)+"', ?, ?, ?, ?);");
+                    for(SimpleDateFormat sdf : sdfs) {
+                       for(SimpleDateFormat fhd2 : fhd) {
+                            po = con.prepareStatement("insert into historias_clinicas(id_historia, id_personal, id_paciente, fecha, hora, peso, talla, diagnostico, patologia) values (?, ?, ?, '"+sdf.format(d)+"', '"+fhd2.format(hora)+"', ?, ?, ?, ?);");
+                        }
+                   }
                     
                     po.setInt(1, id_hc);
                     po.setInt(2, id_personal);
