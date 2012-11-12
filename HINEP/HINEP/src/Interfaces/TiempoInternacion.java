@@ -130,7 +130,7 @@ public class TiempoInternacion extends javax.swing.JDialog {
                 fecha_ing = rs.getString("fecha_ing");
                 habitacion = rs.getString("nro_habitacion") + " " + rs.getString("desc_cama");
                 nombre = rs.getString("ape_1") + " " + rs.getString("nom_1");
-                tiempo = tiempoInternacion(dif_fecha, dif_hora);
+                tiempo = calcularTiempo(dif_fecha, dif_hora);
                 Object o[] = {tiempo, habitacion, nombre, fecha_ing};
                 modelo.addRow(o);
                 //System.out.println();
@@ -140,7 +140,7 @@ public class TiempoInternacion extends javax.swing.JDialog {
         }
     }
 
-    private int tiempoInternacion(int dif_fecha, String dif_hora) {
+    private int calcularTiempo(int dif_fecha, String dif_hora) {
         int indice, tiempo, diasEnHoras = 0;
         System.out.println(dif_hora);
         indice = dif_hora.indexOf(":");

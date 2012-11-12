@@ -4,11 +4,10 @@ import java.sql.Connection;
 
 public class AdministrarInternaciones extends javax.swing.JDialog {
 
-    public AdministrarInternaciones(Principal in, Connection cn) {
-        //super(parent, modal);
+    public AdministrarInternaciones(Principal in, Connection cn, int id) {
         initComponents();
         this.conexion = cn;
-        //this.Menu = parent;
+        this.id_personal = id;
         this.inicio = in;
         buttonGroup1.add(jrbAlta);
         buttonGroup1.add(jrbTiempo);
@@ -100,7 +99,7 @@ public class AdministrarInternaciones extends javax.swing.JDialog {
 
     private void jbAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAceptarActionPerformed
         if (jrbAlta.isSelected()) {
-            AltaPaciente ap = new AltaPaciente(this);
+            AltaPaciente ap = new AltaPaciente(this, id_personal, conexion);
             ap.setVisible(true);
             this.setVisible(false);
             //Menu.setVisible(false);
@@ -120,6 +119,7 @@ public class AdministrarInternaciones extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
     private Principal inicio;
     private Connection conexion;
+    private int id_personal;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
