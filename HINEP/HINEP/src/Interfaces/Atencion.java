@@ -418,7 +418,7 @@ public class Atencion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbRecetarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbRecetarActionPerformed
-        Recetar rec = new Recetar(this,rootPaneCheckingEnabled);
+        Recetar rec = new Recetar(this,rootPaneCheckingEnabled,this.con,this.id_paciente,this.id_personal);
         rec.setVisible(true);
     }//GEN-LAST:event_jbRecetarActionPerformed
 
@@ -488,7 +488,7 @@ public class Atencion extends javax.swing.JFrame {
     }//GEN-LAST:event_jbTerminarActionPerformed
 
     private void jbPracticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPracticaActionPerformed
-        IndicarPractica ip= new IndicarPractica(this, rootPaneCheckingEnabled);
+        IndicarPractica ip= new IndicarPractica(this, rootPaneCheckingEnabled,this.con,this.id_paciente,this.id_personal);
         ip.setVisible(true);
     }//GEN-LAST:event_jbPracticaActionPerformed
 

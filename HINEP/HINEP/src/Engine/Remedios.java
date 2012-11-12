@@ -14,6 +14,13 @@ public class Remedios {
     private String nombre;
     private String tipo;
 
+    public Remedios(int idRemedio, String nombre, String tipo) {
+        this.idRemedio = idRemedio;
+        this.nombre = nombre;
+        this.tipo = tipo;
+    }
+
+    
     public int getIdRemedio() {
         return idRemedio;
     }

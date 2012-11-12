@@ -10,15 +10,38 @@
  */
 package Interfaces;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author SySoft
  */
 public class IndicarPractica extends javax.swing.JDialog {
-
+    
+    private Connection con;
+    private PreparedStatement ps;
+    private ResultSet res;    
+    private int idpersonal,idpaciente;
+    String tipopra,servicio;
+    
+    
     /** Creates new form IndicarPractica */
-    public IndicarPractica(java.awt.Frame parent, boolean modal) {
+    public IndicarPractica(java.awt.Frame parent, boolean modal,Connection con,int idpaciente,int idpersonal) {
         super(parent, modal);
+        this.con=con; 
+        this.idpaciente=idpaciente;
+        this.idpersonal=idpersonal;
+        this.tipopra="";
+        this.servicio="";
         initComponents();
     }
 
@@ -36,7 +59,7 @@ public class IndicarPractica extends javax.swing.JDialog {
         jtfTipopra = new javax.swing.JTextField();
         jbBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablar = new javax.swing.JTable();
         jbGenerar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -47,8 +70,13 @@ public class IndicarPractica extends javax.swing.JDialog {
         jLabel1.setText("Tipo de Practica:");
 
         jbBuscar.setText("Buscar");
+        jbBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbBuscarActionPerformed(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablar.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -64,7 +92,7 @@ public class IndicarPractica extends javax.swing.JDialog {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablar);
 
         jbGenerar.setText("Generar Práctica");
         jbGenerar.addActionListener(new java.awt.event.ActionListener() {
@@ -83,10 +111,11 @@ public class IndicarPractica extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jtfTipopra, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jtfTipopra)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jbBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(8, 8, 8))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(265, 265, 265)
                         .addComponent(jbGenerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -95,17 +124,13 @@ public class IndicarPractica extends javax.swing.JDialog {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(jtfTipopra))
+                .addGap(16, 16, 16)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jtfTipopra)
                     .addComponent(jbBuscar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(jbGenerar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -126,8 +151,112 @@ public class IndicarPractica extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jbGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbGenerarActionPerformed
+        int i=JOptionPane.showConfirmDialog(rootPane, "¿Desea guardar los datos de la practica a realizar al paciente?", null, WIDTH);
+        String fecha;
+        int idpractica=0;
+        
+        if(i==0 && this.tablar.getRowCount()+1>0)
+        {
+            try {
+                // Obtengo la fecha del sistema 
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");                       
+                java.util.Date fechaSistema = new java.util.Date();                                              
+                fecha = sdf.format(fechaSistema);
+                
+                
+                int pos1 = tablar.getSelectedRow();                
+                tipopra = tablar.getValueAt(pos1, 0).toString().toUpperCase();                
+                
+                ps = con.prepareStatement("select * from practicas_servicios where tipo_practica=?");            
+                ps.setString(1,tipopra);
+                res = ps.executeQuery();
+                
+                if(res.next()){
+                    idpractica=res.getInt(1);
+                }
+                
+                ps = con.prepareStatement("INSERT INTO ordenes_practicas(id_practica_servicio, id_personal, id_paciente, fecha)VALUES ("+idpractica+","+idpersonal+","+idpaciente+",'"+fecha+"')");
+                ps.execute();
+                
+                /*ps = con.prepareStatement("select id_orden from ordenes_practicas where id_practica_servicio=? and id_personal=? and id_paciente=? and fecha=?");
+                ps.setInt(1,idpractica);
+                ps.setInt(2,idpersonal);
+                ps.setInt(3,idpaciente);
+                ps.setDate(4,Date.valueOf(fecha));
+                res = ps.executeQuery();
+                
+                int idorden;
+                
+                if(res.next()){
+                    idorden=res.getInt(1);
+                }*/
+                
+                
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(IndicarPractica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                        
+            
+            
+        }
+        
+        
         this.setVisible(false);
     }//GEN-LAST:event_jbGenerarActionPerformed
+
+    private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
+        // TODO add your handling code here:
+        
+        if(jtfTipopra.getText().equals("")){          
+            JOptionPane.showMessageDialog(rootPane, "Ingrese el Tipo de Práctica a buscar", null, WIDTH);            
+           }
+        else{
+            try {
+                String practica=jtfTipopra.getText().toUpperCase();
+                ps = con.prepareStatement("select * from practicas_servicios where tipo_practica like ?");            
+                ps.setString(1, "%"+practica+"%");                
+                res = ps.executeQuery();
+            
+            if(res.next()==false){
+                JOptionPane.showMessageDialog(rootPane, "El remedio ingresado o el tipo no coinciden. Verifique los datos ingresados ");                
+             }
+            else{                
+                ps = con.prepareStatement("select * from practicas_servicios where tipo_practica like ?");            
+                ps.setString(1, "%"+practica+"%");                
+                res = ps.executeQuery();
+                        
+                ResultSet res1; 
+                DefaultTableModel temp = (DefaultTableModel) tablar.getModel();
+                while(temp.getRowCount()-1>=0){
+                        temp.removeRow(0);
+                    }
+                                          
+                while(res.next())
+               {                  
+                ps = con.prepareStatement("select * from servicios where id_servicio=?");            
+                int idserv=res.getInt("id_servicio");
+                ps.setInt(1,idserv);                
+                res1 = ps.executeQuery();
+                
+                tipopra = res.getString("tipo_practica");
+                                                                           
+                if(res1.next()){
+                    servicio=res1.getString(2);
+                }
+                                
+                                
+                Object o[] = {tipopra,servicio};
+                temp.addRow(o);
+               } 
+            }
+            
+            } catch (SQLException ex) {
+                Logger.getLogger(IndicarPractica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+            }
+    }//GEN-LAST:event_jbBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,9 +266,9 @@ public class IndicarPractica extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton jbBuscar;
     private javax.swing.JButton jbGenerar;
     private javax.swing.JTextField jtfTipopra;
+    private javax.swing.JTable tablar;
     // End of variables declaration//GEN-END:variables
 }
