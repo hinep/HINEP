@@ -4,6 +4,7 @@
  */
 package Interfaces;
 
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -20,6 +21,7 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu(Connection cn, int id, Principal in) {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         setLocationRelativeTo(null);
         conexion = cn;
         id_personal = id;

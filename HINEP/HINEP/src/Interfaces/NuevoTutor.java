@@ -5,6 +5,7 @@
 package Interfaces;
 
 import Engine.Tutor;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
 
@@ -21,6 +22,7 @@ public class NuevoTutor extends javax.swing.JDialog {
     public NuevoTutor(java.awt.Frame parent, boolean modal, Connection con){
         super(parent, modal);
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         jlAsteApe.setVisible(false);
         jlObliga.setVisible(false);
         jlAsteDni.setVisible(false);

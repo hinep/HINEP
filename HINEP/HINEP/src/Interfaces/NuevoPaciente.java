@@ -11,6 +11,7 @@
 package Interfaces;
 
 import Engine.Paciente;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,6 +32,7 @@ public class NuevoPaciente extends javax.swing.JDialog {
     public NuevoPaciente(java.awt.Frame parent, boolean modal, Connection con) {
         super(parent, modal);
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         jlObliga.setVisible(false);
         jlAsteApe.setVisible(false);
         jlAsteNom.setVisible(false);
