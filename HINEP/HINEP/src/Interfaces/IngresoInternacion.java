@@ -198,10 +198,7 @@ public class IngresoInternacion extends javax.swing.JDialog {
                         
                         ps = con.prepareStatement("INSERT INTO internaciones_transitorias(id_servicio, id_cama, id_paciente, id_pers_ing,fecha_ing, hora_ing)VALUES ("+idserv+","+id_cama+" ,"+this.idpaciente+","+this.idpersonal+",'"+fecha+"','"+t1+"')");
                         ps.execute();
-                        /*ps.setInt(idservicio, 1);
-                        ps.setInt(id_cama, 2);
-                        ps.setInt(idpaciente, 3);
-                        ps.setInt(idpersonal, 4);*/
+                       
                         
                 
             } catch (SQLException ex) {
