@@ -341,11 +341,6 @@
         <Component class="javax.swing.JTextField" name="jtfA&#xf1;o">
         </Component>
         <Component class="javax.swing.JComboBox" name="jcbObraSocial">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="new javax.swing.DefaultComboBoxModel(new String[] { &quot;NO TIENE&quot;,&quot;OSEP&quot; })" type="code"/>
-            </Property>
-          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jcbObraSocialActionPerformed"/>
           </Events>
