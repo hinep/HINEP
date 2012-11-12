@@ -1,6 +1,5 @@
 package Interfaces;
 
-import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -12,8 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 /*
  * To change this template, choose Tools | Templates
@@ -40,8 +37,6 @@ public class Principal extends javax.swing.JFrame {
 
     public Principal() throws ClassNotFoundException, SQLException {
         initComponents();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
-        
         setLocationRelativeTo(null);
         setResizable(false);
         noError();

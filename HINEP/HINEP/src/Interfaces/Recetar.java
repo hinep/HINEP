@@ -1,7 +1,6 @@
 
 package Interfaces;
 
-import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,7 +30,6 @@ public class Recetar extends javax.swing.JDialog {
         this.idpaciente=idpac;
         this.idpersonal=idper;
         initComponents();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         this.temp=(DefaultTableModel) tablar.getModel();
     }
     @SuppressWarnings("unchecked")

@@ -10,7 +10,6 @@
  */
 package Interfaces;
 
-import java.awt.Toolkit;
 import java.sql.Connection;
 
 /**
@@ -22,7 +21,6 @@ public class InformeMensual extends javax.swing.JDialog {
     /** Creates new form InformeMensual */
     public InformeMensual(Connection con) {
         initComponents();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         setLocationRelativeTo(null);
         cn = con;
     }

@@ -4,7 +4,6 @@
  */
 package Interfaces;
 
-import java.awt.Toolkit;
 import java.sql.Connection;
 
 /**
@@ -18,7 +17,6 @@ public class OpcionesJefeGuardia extends javax.swing.JFrame {
      */
     public OpcionesJefeGuardia(Principal in, Connection con) {
         initComponents();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         setLocationRelativeTo(null);
         jRadButGuardias.setSelected(true);
         buttonGroup1.add(jRButInformes);

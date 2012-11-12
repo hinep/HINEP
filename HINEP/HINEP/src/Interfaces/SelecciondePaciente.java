@@ -1,6 +1,5 @@
 package Interfaces;
 
-import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,7 +22,6 @@ public class SelecciondePaciente extends javax.swing.JFrame {
     
     public SelecciondePaciente(javax.swing.JFrame menu, Connection cn, int id_per) throws SQLException {
         initComponents();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         Menu=menu;
         con=cn;
         i=0;

@@ -6,7 +6,6 @@
 package Interfaces;
 
 import java.awt.Color;
-import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +31,6 @@ public class Busqueda extends javax.swing.JFrame {
      */
     public Busqueda(javax.swing.JFrame menu, Connection cn) {
         initComponents();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         this.conexion = cn;
         this.Menu = menu;
         this.esPa = true;
