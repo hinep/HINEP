@@ -2,6 +2,7 @@ package Interfaces;
 
 import Engine.Paciente;
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +26,7 @@ public class Atencion extends javax.swing.JFrame {
     
     public Atencion(javax.swing.JFrame menu, javax.swing.JFrame selec,Connection cn, int id_esp, int id_per) throws SQLException {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         Menu = menu;
         Selec=selec;
         id_esperas=id_esp;

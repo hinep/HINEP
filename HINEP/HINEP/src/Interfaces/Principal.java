@@ -1,5 +1,6 @@
 package Interfaces;
 
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
@@ -37,6 +38,7 @@ public class Principal extends javax.swing.JFrame {
 
     public Principal() throws ClassNotFoundException, SQLException {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         setLocationRelativeTo(null);
         setResizable(false);
         noError();

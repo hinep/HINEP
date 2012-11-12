@@ -1,6 +1,7 @@
 package Interfaces;
 
 import Engine.Remedios;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,8 @@ public class Indicacion extends javax.swing.JDialog {
         this.con=con; 
         this.idremedio="0";        
         this.indicaciones="Nada";        
-        initComponents();                             
+        initComponents();      
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         this.setVisible(true);
     }
     

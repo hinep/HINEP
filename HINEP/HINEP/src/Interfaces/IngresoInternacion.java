@@ -10,6 +10,7 @@
  */
 package Interfaces;
 
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -40,6 +41,7 @@ public class IngresoInternacion extends javax.swing.JDialog {
         this.idpaciente=idpaciente;
         this.idpersonal=idpersonal;                              
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         jbInternar.setEnabled(false);
         
         try {            

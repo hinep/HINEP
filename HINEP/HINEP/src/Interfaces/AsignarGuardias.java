@@ -1,6 +1,7 @@
 package Interfaces;
 
 import Engine.Guardia;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,6 +17,7 @@ public class AsignarGuardias extends javax.swing.JFrame {
 
     public AsignarGuardias(Connection con) {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         guardia = new Guardia();
         sdf = new SimpleDateFormat("yyyy-MM-dd");
         error(false);

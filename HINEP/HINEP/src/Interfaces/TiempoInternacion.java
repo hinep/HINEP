@@ -1,5 +1,6 @@
 package Interfaces;
 
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ public class TiempoInternacion extends javax.swing.JDialog {
 
     public TiempoInternacion(AdministrarInternaciones ai, Connection con) {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         cn = con;
         adminInter = ai;
         try {

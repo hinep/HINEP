@@ -1,6 +1,7 @@
 package Interfaces;
 
 import Engine.Internacion;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ public class AltaPaciente extends javax.swing.JFrame {
 
     public AltaPaciente(AdministrarInternaciones ai, int id, Connection con) {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         adminInter = ai;
         cn = con;
         id_personal = id;

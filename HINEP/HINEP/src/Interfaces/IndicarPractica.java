@@ -10,6 +10,7 @@
  */
 package Interfaces;
 
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -45,6 +46,7 @@ public class IndicarPractica extends javax.swing.JDialog {
         this.servicio=""; 
         this.id_servicio=0;
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
     }
     
     /** This method is called from within the constructor to

@@ -11,6 +11,7 @@
 package Interfaces;
 
 import Engine.Paciente;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,6 +33,7 @@ public class Medicar extends javax.swing.JFrame {
     private int id_personal,id_prescripcion;
     public Medicar(javax.swing.JFrame menu, Connection cn, int idPer) {
         initComponents();
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         jlAsteCod.setVisible(false);
         jlAsteDosis.setVisible(false);
         jlIngrese.setVisible(false);
