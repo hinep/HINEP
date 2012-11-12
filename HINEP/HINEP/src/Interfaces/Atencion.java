@@ -20,7 +20,7 @@ public class Atencion extends javax.swing.JFrame {
     private Connection con;
     private PreparedStatement ps,pa,pe,pi,po,pu,ps2;
     private ResultSet res,res1,res2,res3,res4;
-    private Paciente pac;
+    private Paciente pac;    
     private int id_personal;
     
     public Atencion(javax.swing.JFrame menu, javax.swing.JFrame selec,Connection cn, int id_esp, int id_per) throws SQLException {
@@ -495,12 +495,12 @@ public class Atencion extends javax.swing.JFrame {
     }//GEN-LAST:event_jbTerminarActionPerformed
 
     private void jbPracticaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbPracticaActionPerformed
-        IndicarPractica ip= new IndicarPractica(this, rootPaneCheckingEnabled,this.con,this.id_paciente,this.id_personal);
+        IndicarPractica ip= new IndicarPractica(this, rootPaneCheckingEnabled,this.con,this.id_paciente,this.id_personal);                        
         ip.setVisible(true);
     }//GEN-LAST:event_jbPracticaActionPerformed
 
     private void jbInternarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbInternarActionPerformed
-        IngresoInternacion ii = new IngresoInternacion(this, rootPaneCheckingEnabled);
+        IngresoInternacion ii = new IngresoInternacion(this, rootPaneCheckingEnabled,this.con,this.id_paciente,this.id_personal);
         ii.setVisible(true);
     }//GEN-LAST:event_jbInternarActionPerformed
 

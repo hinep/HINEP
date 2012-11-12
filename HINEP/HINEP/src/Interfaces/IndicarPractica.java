@@ -31,6 +31,7 @@ public class IndicarPractica extends javax.swing.JDialog {
     private PreparedStatement ps;
     private ResultSet res;    
     private int idpersonal,idpaciente;
+    public int id_servicio;
     String tipopra,servicio;
     
     
@@ -41,10 +42,11 @@ public class IndicarPractica extends javax.swing.JDialog {
         this.idpaciente=idpaciente;
         this.idpersonal=idpersonal;
         this.tipopra="";
-        this.servicio="";
+        this.servicio=""; 
+        this.id_servicio=0;
         initComponents();
     }
-
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -173,10 +175,14 @@ public class IndicarPractica extends javax.swing.JDialog {
                 
                 if(res.next()){
                     idpractica=res.getInt(1);
+                    
                 }
+                int ids=res.getInt(2);//Este anda bien id_servicio
+                setServicio(ids);
                 
                 ps = con.prepareStatement("INSERT INTO ordenes_practicas(id_practica_servicio, id_personal, id_paciente, fecha)VALUES ("+idpractica+","+idpersonal+","+idpaciente+",'"+fecha+"')");
                 ps.execute();
+                
                 
                 /*ps = con.prepareStatement("select id_orden from ordenes_practicas where id_practica_servicio=? and id_personal=? and id_paciente=? and fecha=?");
                 ps.setInt(1,idpractica);
@@ -203,8 +209,18 @@ public class IndicarPractica extends javax.swing.JDialog {
         
         
         this.setVisible(false);
+        
     }//GEN-LAST:event_jbGenerarActionPerformed
-
+    
+    public void setServicio(int ids){
+        this.id_servicio=ids;
+    } 
+    
+    public int devolverServicio(){  
+        System.out.println("Id del Servicio en devolverServicio(): "+this.id_servicio); 
+        return this.id_servicio;        
+    }
+     
     private void jbBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbBuscarActionPerformed
         // TODO add your handling code here:
         
@@ -235,9 +251,10 @@ public class IndicarPractica extends javax.swing.JDialog {
                 while(res.next())
                {                  
                 ps = con.prepareStatement("select * from servicios where id_servicio=?");            
-                int idserv=res.getInt("id_servicio");
+                int idserv=res.getInt("id_servicio");                              
                 ps.setInt(1,idserv);                
                 res1 = ps.executeQuery();
+                
                 
                 tipopra = res.getString("tipo_practica");
                                                                            

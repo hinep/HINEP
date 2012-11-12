@@ -245,16 +245,38 @@ public class SelecciondePaciente extends javax.swing.JFrame {
 
     private void jbAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtenderActionPerformed
         String[] nivelimportancia = {"ALTA","MEDIA","BAJA"};
-        if(tabla.getSelectedRow()+1>0)
+        String dni="",ape="";        
+        if(tabla.getSelectedRow()+1>0)            
         {
             int[] j = tabla.getSelectedRows();
             if(j.length==1)
             {
                 int pos = tabla.getSelectedRow();
                 nombre = (String)tabla.getValueAt(pos, 0);
+                ape = (String)tabla.getValueAt(pos, 1);
+                dni=tabla.getValueAt(pos, 2).toString();
                 try {
-                int palabra=0,controlentrada=0,cont=0;
-                while(palabra<3){
+                //Obtengo el id_espera del paciente seleccionado
+                
+                ps = con.prepareStatement("select id_paciente from pacientes where ape_1=? and dni=?");
+                ps.setString(1, ape);
+                ps.setString(2, dni);  
+                res = ps.executeQuery();
+                
+                if(res.next()){
+                    id_paciente=res.getInt(1);                
+                }
+                
+                ps = con.prepareStatement("select id_esperas from esperas where id_paciente=? and estado='No Atendido'");
+                ps.setInt(1, id_paciente);                  
+                res = ps.executeQuery();
+                
+                if(res.next()){
+                    id_espera=res.getInt(1);                
+                }
+                
+                //int palabra=0,controlentrada=0,cont=0;
+                /*while(palabra<3){
                     ps = con.prepareStatement("select * from esperas where estado='No Atendido' and nivel_imp='"+nivelimportancia[palabra]+"'");
                     res = ps.executeQuery();
                     res.next();
@@ -274,7 +296,7 @@ public class SelecciondePaciente extends javax.swing.JFrame {
                     }
                     
                     
-                }
+                }*/
                 
                 Atencion at= new Atencion(Menu,this,con,id_espera,id_personal);
                 at.setVisible(true);
