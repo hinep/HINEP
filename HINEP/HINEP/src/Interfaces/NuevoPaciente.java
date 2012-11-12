@@ -12,6 +12,12 @@ package Interfaces;
 
 import Engine.Paciente;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -30,6 +36,7 @@ public class NuevoPaciente extends javax.swing.JDialog {
         jlAsteNom.setVisible(false);
         jlAsteDni.setVisible(false);
         this.conexion = con;
+        cargarCombo();
     }
 
     /** This method is called from within the constructor to
@@ -97,7 +104,6 @@ public class NuevoPaciente extends javax.swing.JDialog {
 
         jcbSexo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Femenino", "Masculino" }));
 
-        jcbObraSocial.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "NO TIENE","OSEP" }));
         jcbObraSocial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jcbObraSocialActionPerformed(evt);
@@ -309,7 +315,7 @@ public class NuevoPaciente extends javax.swing.JDialog {
             {
                 String nom1,nom2,ape1,ape2,dni,numSoc,sexo,fecNac,domicilio;
 
-                int os;                         
+                int os;
                 nom1 = jtfNombre1.getText();
                 nom2 = jtfNombre2.getText();
                 ape1 = jtfApellido1.getText();
@@ -317,12 +323,8 @@ public class NuevoPaciente extends javax.swing.JDialog {
                 dni = jtfDni.getText();
                 numSoc = jtfNumSoc.getText();
                 domicilio = jtfDireccion.getText();
-                switch(jcbObraSocial.getSelectedIndex()){
-                     case 1:
-                        os = 1;
-                        break;
-                    default: os = 0;
-                }
+                System.out.println(jcbObraSocial.getSelectedIndex());
+                os = jcbObraSocial.getSelectedIndex();     
                 if(jcbSexo.getSelectedIndex() == 0){
                     sexo = "F";
                 }else{
@@ -424,4 +426,20 @@ public class NuevoPaciente extends javax.swing.JDialog {
     private javax.swing.JTextField jtfNombre2;
     private javax.swing.JTextField jtfNumSoc;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarCombo(){
+        try {
+            DefaultComboBoxModel comboModel = new DefaultComboBoxModel();
+            PreparedStatement ps = conexion.prepareStatement("select * from obras_sociales");
+            if(ps.execute()){
+                ResultSet rs = ps.executeQuery();
+                while(rs.next()){
+                    comboModel.addElement(rs.getString("nombre_os"));
+                }
+                jcbObraSocial.setModel(comboModel);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NuevoPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

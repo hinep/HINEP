@@ -105,10 +105,10 @@ public class OpcionesJefeGuardia extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadButGuardiasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(jRadButGuardias.isSelected()){
+        if (jRadButGuardias.isSelected()) {
             AsignarGuardias asigGuardia = new AsignarGuardias(cn);
             asigGuardia.setVisible(true);
-        }else{
+        } else {
             InformeMensual infoMensual = new InformeMensual(cn);
             infoMensual.setVisible(true);
         }
@@ -118,14 +118,14 @@ public class OpcionesJefeGuardia extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         inicio.blanquear();
         inicio.setVisible(true);
+        this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
-
     /**
      * @param args the command line arguments
      */
     private Principal inicio;
-private Connection cn;
+    private Connection cn;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;

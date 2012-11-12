@@ -27,7 +27,7 @@ public class SelecciondePaciente extends javax.swing.JFrame {
         i=0;
         controlespera=0;
         id_personal=id_per;
-        ps = con.prepareStatement("select * from esperas where estado='No Atendido' order by nivel_imp");
+        ps = con.prepareStatement("select * from esperas where estado='No Atendido' and nivel_imp='ALTA'");
         
         res = ps.executeQuery();
         while(res.next())
@@ -61,6 +61,80 @@ public class SelecciondePaciente extends javax.swing.JFrame {
                 controlespera=1;
                 jbAtender.setEnabled(true);
         }
+        
+        
+        ps = con.prepareStatement("select * from esperas where estado='No Atendido' and nivel_imp='MEDIA'");
+        
+        res = ps.executeQuery();
+        while(res.next())
+        {
+                PreparedStatement pa = con.prepareStatement("select * from pacientes where id_paciente=?");
+                id_paciente = res.getInt("id_paciente");
+                pa.setInt(1, id_paciente);
+                ResultSet res1 = pa.executeQuery();
+                res1.next();
+
+                Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
+                for(int i=0;i<tabla.getColumnCount();i++)
+                for(int j=0;j<tabla.getRowCount();j++)
+                   m[j][i]=tabla.getValueAt(j, i);
+                tabla.setModel(new DefaultTableModel(m,new String[]{"Nombre", "Apellido","DNI","Edad","Prioridad"}));
+
+                nombre = res1.getString("nom_1")+" "+res1.getString("nom_2");
+                apellido = res1.getString("ape_1")+" "+res1.getString("ape_2");
+                dni = res1.getInt("dni");
+                fecha = res1.getString("fecha_nac");
+                prioridad = res.getString("nivel_imp");
+                
+                m[i][0] = nombre;
+                m[i][1] = apellido;
+                m[i][2] = dni;
+                m[i][3] = fecha;
+                m[i][4] = prioridad;
+                
+                tabla.setModel(new DefaultTableModel(m,new String[]{"Nombre", "Apellido","DNI","Edad","Prioridad"}));
+                i++;
+                controlespera=1;
+                jbAtender.setEnabled(true);
+        }
+        
+        
+        ps = con.prepareStatement("select * from esperas where estado='No Atendido' and nivel_imp='BAJA'");
+        
+        res = ps.executeQuery();
+        while(res.next())
+        {
+                PreparedStatement pa = con.prepareStatement("select * from pacientes where id_paciente=?");
+                id_paciente = res.getInt("id_paciente");
+                pa.setInt(1, id_paciente);
+                ResultSet res1 = pa.executeQuery();
+                res1.next();
+
+                Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
+                for(int i=0;i<tabla.getColumnCount();i++)
+                for(int j=0;j<tabla.getRowCount();j++)
+                   m[j][i]=tabla.getValueAt(j, i);
+                tabla.setModel(new DefaultTableModel(m,new String[]{"Nombre", "Apellido","DNI","Edad","Prioridad"}));
+
+                nombre = res1.getString("nom_1")+" "+res1.getString("nom_2");
+                apellido = res1.getString("ape_1")+" "+res1.getString("ape_2");
+                dni = res1.getInt("dni");
+                fecha = res1.getString("fecha_nac");
+                prioridad = res.getString("nivel_imp");
+                
+                m[i][0] = nombre;
+                m[i][1] = apellido;
+                m[i][2] = dni;
+                m[i][3] = fecha;
+                m[i][4] = prioridad;
+                
+                tabla.setModel(new DefaultTableModel(m,new String[]{"Nombre", "Apellido","DNI","Edad","Prioridad"}));
+                i++;
+                controlespera=1;
+                jbAtender.setEnabled(true);
+        }
+        
+        
         
         if(controlespera==0)
         {
@@ -170,7 +244,7 @@ public class SelecciondePaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_jbAtrasActionPerformed
 
     private void jbAtenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAtenderActionPerformed
-        
+        String[] nivelimportancia = {"ALTA","MEDIA","BAJA"};
         if(tabla.getSelectedRow()+1>0)
         {
             int[] j = tabla.getSelectedRows();
@@ -179,19 +253,33 @@ public class SelecciondePaciente extends javax.swing.JFrame {
                 int pos = tabla.getSelectedRow();
                 nombre = (String)tabla.getValueAt(pos, 0);
                 try {
+                int palabra=0,controlentrada=0,cont=0;
+                while(palabra<3){
+                    ps = con.prepareStatement("select * from esperas where estado='No Atendido' and nivel_imp='"+nivelimportancia[palabra]+"'");
                     res = ps.executeQuery();
                     res.next();
-                    int cont=0;
-                    while(cont!=pos)
-                    {
-                        res.next();
-                        cont++;
+                    while(res.next()){
+                        if(cont!=pos){
+                            
+                            cont++;
+                            }
+                        }
+                    palabra++;
+                    if(cont==pos){
+                        if(controlentrada!=1){
+                            System.out.println(cont+" "+pos);
+                            int id_espera = res.getInt(1);
+                            controlentrada=1;
+                        }
                     }
+                    
+                    
+                }
                 
-                int id_espera = res.getInt("id_esperas");
                 Atencion at= new Atencion(Menu,this,con,id_espera,id_personal);
                 at.setVisible(true);
                 this.setVisible(false);
+                
                 } catch (SQLException ex) {
                     Logger.getLogger(SelecciondePaciente.class.getName()).log(Level.SEVERE, null, ex);
                 }
