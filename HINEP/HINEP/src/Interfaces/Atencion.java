@@ -74,28 +74,29 @@ public class Atencion extends javax.swing.JFrame {
         res3 = pi.executeQuery();
         pos=0;       
         controlespera=0;
-        
+        int i=0, j=0;
         while(res3.next())
         {
-                Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
-                for(int i=0;i<tabla.getColumnCount();i++) {
-                for(int j=0;j<tabla.getRowCount();j++) {
+                /*Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
+                for(i=0;i<tabla.getColumnCount();i++) {
+                for(j=0;j<tabla.getRowCount();j++) {
                         m[j][i]=tabla.getValueAt(j, i);
                     }
-            }
+                }
                 tabla.setModel(new DefaultTableModel(m,new String[]{"FECHA", "DIAGNOSTICO","PATOLOGÍA","TALLA","PESO"}));
-
-                for(int i=0;i<tabla.getColumnCount();i++)
-                for(int j=0;j<tabla.getRowCount();j++)
+                * */
+            Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
+                for(i=0;i<tabla.getColumnCount();i++)
+                for(j=0;j<tabla.getRowCount();j++)
                    m[j][i]=tabla.getValueAt(j, i);
                 tabla.setModel(new DefaultTableModel(m,new String[]{"FECHA", "DIAGNOSTICO","PATOLOGÍA","TALLA","PESO"}));
 
 
-                m[pos][0] = res3.getDate(4).toString();
-                m[pos][1] = res3.getString(5);
-                m[pos][2] = res3.getString(6);
-                m[pos][3] = res3.getString(7);
-                m[pos][4] = res3.getString(8);
+                m[pos][0] = res3.getDate("fecha").toString();
+                m[pos][1] = res3.getString("diagnostico");
+                m[pos][2] = res3.getString("patologia");
+                m[pos][3] = res3.getString("peso");
+                m[pos][4] = res3.getString("talla");
                         
                 tabla.setModel(new DefaultTableModel(m,new String[]{"FECHA", "DIAGNOSTICO","PATOLOGÍA","TALLA","PESO"}));
                 pos++;
@@ -227,11 +228,11 @@ public class Atencion extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Fecha", "Diagnóstico", "Patología"
+                "FECHA", "DIAGNÓSTICO", "PATOLOGÍA", "PESO", "TALLA"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {

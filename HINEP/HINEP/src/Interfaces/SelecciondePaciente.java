@@ -266,27 +266,30 @@ public class SelecciondePaciente extends javax.swing.JFrame {
                     ps.setString(2, dni);  
                     res = ps.executeQuery();
                     
-                    if(res.next()){
+                    /*if(res.next()){
                         id_espera=res.getInt(1);                
-                    }
+                    }*/
                     
                     int palabra=0,controlentrada=0,cont=0;
                     while(palabra<3){
                         ps = con.prepareStatement("select * from esperas where estado='No Atendido' and nivel_imp='"+nivelimportancia[palabra]+"'");
 
                         res = ps.executeQuery();
-                        res.next();
-                        
-                        while(cont!=pos)
+
+                        while(res.next())
                         {
-                            res.next();
-                            cont++;
+                            if(cont!=pos){
+                                cont++;
+                            }
+                            if(cont==pos){
+                                id_espera = res.getInt("id_esperas");
+                            }
                         }
                         palabra++;
                     }
 
                     
-                    int id_espera = res.getInt("id_esperas");
+                    
                     Atencion at= new Atencion(Menu,this,con,id_espera,id_personal);
                     at.setVisible(true);
                     this.setVisible(false);
