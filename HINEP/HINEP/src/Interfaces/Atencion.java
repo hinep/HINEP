@@ -89,7 +89,7 @@ public class Atencion extends javax.swing.JFrame {
                 for(i=0;i<tabla.getColumnCount();i++)
                 for(j=0;j<tabla.getRowCount();j++)
                    m[j][i]=tabla.getValueAt(j, i);
-                tabla.setModel(new DefaultTableModel(m,new String[]{"FECHA", "DIAGNOSTICO","PATOLOGÍA","TALLA","PESO"}));
+                tabla.setModel(new DefaultTableModel(m,new String[]{"FECHA", "DIAGNOSTICO","PATOLOGÍA","PESO","TALLA"}));
 
 
                 m[pos][0] = res3.getDate("fecha").toString();
