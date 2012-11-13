@@ -32,6 +32,8 @@ public class Busqueda extends javax.swing.JFrame {
      */
     public Busqueda(javax.swing.JFrame menu, Connection cn) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         this.conexion = cn;
         this.Menu = menu;

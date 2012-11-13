@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import paq_adjunto.ajFrame;
 
 public class Recetar extends javax.swing.JDialog {
     private Connection con;
@@ -31,6 +32,8 @@ public class Recetar extends javax.swing.JDialog {
         this.idpaciente=idpac;
         this.idpersonal=idper;
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         this.temp=(DefaultTableModel) tablar.getModel();
     }
@@ -219,6 +222,10 @@ public class Recetar extends javax.swing.JDialog {
                     pss.execute();
                     fila=fila+1;
                  }
+                 
+                 String sql="SELECT pa.nom_1,pa.ape_1,rem.desc_remedio,rem.tipo_remedio,pre.indicacion FROM pacientes pa,remedios rem,recetas re,prescripciones pre where pa.id_paciente=re.id_paciente AND re.id_receta=pre.id_receta AND pre.id_remedio=rem.id_remedio AND re.id_receta="+id_receta;
+                 ajFrame.cargarReporte(sql, "reporte1");
+
                  this.setVisible(false);
                 }
                

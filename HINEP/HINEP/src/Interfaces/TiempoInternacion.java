@@ -13,6 +13,8 @@ public class TiempoInternacion extends javax.swing.JDialog {
 
     public TiempoInternacion(AdministrarInternaciones ai, Connection con) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         cn = con;
         adminInter = ai;

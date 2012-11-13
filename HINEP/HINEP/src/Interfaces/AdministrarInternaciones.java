@@ -8,6 +8,8 @@ public class AdministrarInternaciones extends javax.swing.JDialog {
     public AdministrarInternaciones(Principal in, Connection cn, int id) {
         initComponents();
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.conexion = cn;
         this.id_personal = id;
         this.inicio = in;

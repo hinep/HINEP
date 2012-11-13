@@ -7,6 +7,8 @@ public class InformeDiario extends javax.swing.JDialog {
 
     public InformeDiario(Principal in, Connection con) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         setLocationRelativeTo(null);
         inicio = in;

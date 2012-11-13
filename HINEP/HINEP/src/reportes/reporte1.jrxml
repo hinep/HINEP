@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte1" pageWidth="283" pageHeight="566" columnWidth="243" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="51d140bb-7c77-4cb0-8d3d-73a769ab0cf5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="44"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT pa.nom_1,pa.ape_1,rem.desc_remedio,rem.tipo_remedio,pre.indicacion FROM pacientes pa,remedios rem,recetas re,prescripciones pre where pa.id_paciente=re.id_paciente AND re.id_receta=pre.id_receta AND pre.id_remedio=rem.id_remedio AND pa.id_paciente= 1;]]>
+	</queryString>
+	<field name="nom_1" class="java.lang.String"/>
+	<field name="ape_1" class="java.lang.String"/>
+	<field name="desc_remedio" class="java.lang.String"/>
+	<field name="tipo_remedio" class="java.lang.String"/>
+	<field name="indicacion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="78" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="7548b747-88ef-4fc2-b4a7-5c74ab824b6b" x="18" y="12" width="216" height="16"/>
+				<textElement>
+					<font fontName="Georgia" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Hospital Interzonal de Niños Eva Perón]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8db17ac3-4dba-4952-8865-e736c4de6a47" x="40" y="42" width="175" height="17"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[San Fdo. del Valle de Catamarca-Catamarca]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8db17ac3-4dba-4952-8865-e736c4de6a47" x="72" y="28" width="99" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Av. Virgen del Valle 1050]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7548b747-88ef-4fc2-b4a7-5c74ab824b6b" x="59" y="62" width="133" height="16"/>
+				<textElement>
+					<font fontName="Georgia" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Receta de Medicamentos]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="24" splitType="Stretch">
+			<line>
+				<reportElement uuid="863c0aac-3069-4ca7-b7e9-bfda0d6b143a" x="-11" y="2" width="265" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.75" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="8db17ac3-4dba-4952-8865-e736c4de6a47" x="154" y="8" width="27" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Fecha:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="75ead479-58e2-4e5b-ad59-7b129430c26e" x="183" y="8" width="75" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8db17ac3-4dba-4952-8865-e736c4de6a47" x="0" y="1" width="40" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Nombre:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f300f917-359f-4e11-91ea-a0bf82eb6d80" x="45" y="1" width="90" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nom_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5927610c-e4de-4c2a-85d1-4a2809915cec" x="45" y="15" width="90" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ape_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8db17ac3-4dba-4952-8865-e736c4de6a47" x="13" y="39" width="59" height="14"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Remedio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8db17ac3-4dba-4952-8865-e736c4de6a47" x="112" y="39" width="27" height="14"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Tipo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8db17ac3-4dba-4952-8865-e736c4de6a47" x="182" y="39" width="50" height="14"/>
+				<textElement>
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Indicación]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="fa47d0a3-71e3-4fbd-ba75-de6ecbcbe4c6" x="-11" y="55" width="265" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="8db17ac3-4dba-4952-8865-e736c4de6a47" x="0" y="15" width="40" height="14"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Apellido:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="fa47d0a3-71e3-4fbd-ba75-de6ecbcbe4c6" x="-11" y="34" width="265" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d0bf6b57-f228-4549-a7af-6c74407e1157" x="-8" y="0" width="96" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{desc_remedio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0089dacf-3d0b-48ac-89b4-22a6da3bf3cf" x="95" y="0" width="64" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_remedio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d43be1f9-a100-4a47-9bea-55c2fda313a7" x="169" y="0" width="88" height="12"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{indicacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

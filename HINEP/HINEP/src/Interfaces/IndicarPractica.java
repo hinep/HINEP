@@ -46,6 +46,8 @@ public class IndicarPractica extends javax.swing.JDialog {
         this.servicio=""; 
         this.id_servicio=0;
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
     }
     

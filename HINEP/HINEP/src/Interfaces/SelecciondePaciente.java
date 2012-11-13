@@ -23,6 +23,8 @@ public class SelecciondePaciente extends javax.swing.JFrame {
     
     public SelecciondePaciente(javax.swing.JFrame menu, Connection cn, int id_per) throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         Menu=menu;
         con=cn;

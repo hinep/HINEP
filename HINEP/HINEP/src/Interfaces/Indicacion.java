@@ -22,7 +22,9 @@ public class Indicacion extends javax.swing.JDialog {
         this.con=con; 
         this.idremedio="0";        
         this.indicaciones="Nada";        
-        initComponents();      
+        initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         this.setVisible(true);
     }

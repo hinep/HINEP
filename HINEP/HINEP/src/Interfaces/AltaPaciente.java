@@ -15,6 +15,8 @@ public class AltaPaciente extends javax.swing.JFrame {
 
     public AltaPaciente(AdministrarInternaciones ai, int id, Connection con) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         adminInter = ai;
         cn = con;

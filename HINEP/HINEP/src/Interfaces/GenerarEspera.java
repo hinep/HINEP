@@ -20,6 +20,8 @@ public class GenerarEspera extends javax.swing.JFrame {
     /** Creates new form GenerarEspera */
     public GenerarEspera(javax.swing.JFrame menu, javax.swing.JFrame busqueda, Connection con, int idPac) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         this.conexion = con;
         this.idPa = idPac;

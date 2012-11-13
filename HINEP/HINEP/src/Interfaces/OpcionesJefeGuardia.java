@@ -18,6 +18,8 @@ public class OpcionesJefeGuardia extends javax.swing.JFrame {
      */
     public OpcionesJefeGuardia(Principal in, Connection con) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         setLocationRelativeTo(null);
         jRadButGuardias.setSelected(true);

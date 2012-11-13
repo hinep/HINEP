@@ -22,6 +22,8 @@ public class NuevoTutor extends javax.swing.JDialog {
     public NuevoTutor(java.awt.Frame parent, boolean modal, Connection con){
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         jlAsteApe.setVisible(false);
         jlObliga.setVisible(false);

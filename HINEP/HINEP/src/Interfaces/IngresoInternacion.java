@@ -41,6 +41,8 @@ public class IngresoInternacion extends javax.swing.JDialog {
         this.idpaciente=idpaciente;
         this.idpersonal=idpersonal;                              
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         jbInternar.setEnabled(false);
         

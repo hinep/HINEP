@@ -21,8 +21,9 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu(Connection cn, int id, Principal in) {
         initComponents();
-        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         setLocationRelativeTo(null);
+        setResizable(false);
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         conexion = cn;
         id_personal = id;
         inicio = in;

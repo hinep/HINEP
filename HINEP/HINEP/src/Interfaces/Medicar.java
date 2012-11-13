@@ -33,6 +33,8 @@ public class Medicar extends javax.swing.JFrame {
     private int id_personal,id_prescripcion;
     public Medicar(javax.swing.JFrame menu, Connection cn, int idPer) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/Iconos/grafico.png"));
         jlAsteCod.setVisible(false);
         jlAsteDosis.setVisible(false);
