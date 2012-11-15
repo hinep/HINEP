@@ -65,11 +65,11 @@ public class Atencion extends javax.swing.JFrame {
         jtfSexo.setDisabledTextColor(Color.BLACK);
         jtfObraSocial.setDisabledTextColor(Color.BLACK);
         jtfNumSoc.setDisabledTextColor(Color.BLACK);
-        jtfNombre.disable();
-        jtfEdad.disable();
-        jtfSexo.disable();
-        jtfObraSocial.disable();
-        jtfNumSoc.disable();
+        jtfNombre.setEnabled(false);
+        jtfEdad.setEnabled(false);
+        jtfSexo.setEnabled(false);
+        jtfObraSocial.setEnabled(false);
+        jtfNumSoc.setEnabled(false);
         
         pi = con.prepareStatement("select * from historias_clinicas where id_paciente=?");
         pi.setInt(1, id_paciente);
@@ -87,9 +87,11 @@ public class Atencion extends javax.swing.JFrame {
             }
                 tabla.setModel(new DefaultTableModel(m,new String[]{"FECHA", "DIAGNOSTICO","PATOLOGÍA","TALLA","PESO"}));
 
-                for(int i=0;i<tabla.getColumnCount();i++)
-                for(int j=0;j<tabla.getRowCount();j++)
-                   m[j][i]=tabla.getValueAt(j, i);
+                for(int i=0;i<tabla.getColumnCount();i++){
+                    for(int j=0;j<tabla.getRowCount();j++){
+                        m[j][i]=tabla.getValueAt(j, i);
+                    }
+                }
                 tabla.setModel(new DefaultTableModel(m,new String[]{"FECHA", "DIAGNOSTICO","PATOLOGÍA","PESO","TALLA"}));
 
 

@@ -47,8 +47,8 @@ public class Busqueda extends javax.swing.JFrame {
         jrbDni.setSelected(true);
         jtfApellido.setDisabledTextColor(Color.red);
         jtfNombre.setDisabledTextColor(Color.red);
-        jtfApellido.disable();
-        jtfNombre.disable();
+        jtfApellido.setEnabled(false);
+        jtfNombre.setEnabled(false);
     }
     
     /** Creates new form Busqueda 
@@ -70,8 +70,8 @@ public class Busqueda extends javax.swing.JFrame {
         jrbDni.setSelected(true);
         jtfApellido.setDisabledTextColor(Color.red);
         jtfNombre.setDisabledTextColor(Color.red);
-        jtfApellido.disable();
-        jtfNombre.disable();
+        jtfApellido.setEnabled(false);
+        jtfNombre.setEnabled(false);
     }
 
     /** This method is called from within the constructor to
@@ -416,16 +416,16 @@ public class Busqueda extends javax.swing.JFrame {
     }//GEN-LAST:event_jbNuevoActionPerformed
 
     private void jrbNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbNombreActionPerformed
-        jtfDni.disable();
-        jtfNombre.enable();
-        jtfApellido.enable();
+        jtfDni.setEnabled(false);
+        jtfNombre.setEnabled(true);
+        jtfApellido.setEnabled(true);
         this.repaint();
     }//GEN-LAST:event_jrbNombreActionPerformed
 
     private void jrbDniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jrbDniActionPerformed
-        jtfDni.enable();
-        jtfNombre.disable();
-        jtfApellido.disable();
+        jtfDni.setEnabled(true);
+        jtfNombre.setEnabled(false);
+        jtfApellido.setEnabled(false);
         this.repaint();
     }//GEN-LAST:event_jrbDniActionPerformed
 

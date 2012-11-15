@@ -43,7 +43,7 @@ public class conexion
     private static String computadoraResidente = "localhost"; //computadora residente
     private static String usuario="postgres";
     private static String contra= "admin";
-    private String baseActiva="hinep";
+    private String baseActiva="hinep1";
     private static String puerto = "5432"; //
     private static String importancia="1";
     /** La conexion con la base de datos */

@@ -1,6 +1,5 @@
 package Interfaces;
 
-import Engine.Remedios;
 import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

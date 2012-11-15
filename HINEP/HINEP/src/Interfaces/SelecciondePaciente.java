@@ -43,9 +43,12 @@ public class SelecciondePaciente extends javax.swing.JFrame {
                 res1.next();
 
                 Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
-                for(int i=0;i<tabla.getColumnCount();i++)
-                for(int j=0;j<tabla.getRowCount();j++)
-                   m[j][i]=tabla.getValueAt(j, i);
+                for(int i=0;i<tabla.getColumnCount();i++){
+                    for(int j=0;j<tabla.getRowCount();j++){
+                        m[j][i]=tabla.getValueAt(j, i);
+                    }                        
+                }
+                
                 tabla.setModel(new DefaultTableModel(m,new String[]{"Nombre", "Apellido","DNI","Edad","Prioridad"}));
 
                 nombre = res1.getString("nom_1")+" "+res1.getString("nom_2");
@@ -79,9 +82,11 @@ public class SelecciondePaciente extends javax.swing.JFrame {
                 res1.next();
 
                 Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
-                for(int i=0;i<tabla.getColumnCount();i++)
-                for(int j=0;j<tabla.getRowCount();j++)
-                   m[j][i]=tabla.getValueAt(j, i);
+                for(int i=0;i<tabla.getColumnCount();i++){
+                    for(int j=0;j<tabla.getRowCount();j++){
+                        m[j][i]=tabla.getValueAt(j, i);
+                    }                        
+                }
                 tabla.setModel(new DefaultTableModel(m,new String[]{"Nombre", "Apellido","DNI","Edad","Prioridad"}));
 
                 nombre = res1.getString("nom_1")+" "+res1.getString("nom_2");
@@ -115,9 +120,11 @@ public class SelecciondePaciente extends javax.swing.JFrame {
                 res1.next();
 
                 Object[][] m=new Object[tabla.getRowCount()+1][tabla.getColumnCount()];
-                for(int i=0;i<tabla.getColumnCount();i++)
-                for(int j=0;j<tabla.getRowCount();j++)
-                   m[j][i]=tabla.getValueAt(j, i);
+                for(int i=0;i<tabla.getColumnCount();i++){
+                    for(int j=0;j<tabla.getRowCount();j++){
+                        m[j][i]=tabla.getValueAt(j, i);
+                    }                        
+                }
                 tabla.setModel(new DefaultTableModel(m,new String[]{"Nombre", "Apellido","DNI","Edad","Prioridad"}));
 
                 nombre = res1.getString("nom_1")+" "+res1.getString("nom_2");
